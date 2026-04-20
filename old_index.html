@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isatis.pro | Full Infrastructure Encyclopedia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --sidebar-bg: #1e293b;
+            --accent-blue: #3b82f6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --code-bg: #000000;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        aside {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .sidebar-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            text-align: center;
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .category-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .category-item:hover,
+        .category-item.active {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 15px 30px;
+            background-color: var(--sidebar-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-bar {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            width: 300px;
+            outline: none;
+        }
+
+        .lang-toggle {
+            background: var(--accent-blue);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .content-area {
+            padding: 40px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--text-primary);
+            margin-top: 30px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            text-align: justify;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            color: #10b981;
+            font-family: monospace;
+        }
+
+        .lang-en {
+            display: none;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .lang-fa {
+            display: block;
+        }
+
+        body.en-mode .lang-fa {
+            display: none;
+        }
+
+        body.en-mode .lang-en {
+            display: block;
+        }
+
+        body.en-mode {
+            direction: ltr;
+        }
+
+        body.en-mode aside {
+            border-left: none;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .step {
+            background: rgba(59, 130, 246, 0.1);
+            border-right: 4px solid var(--accent-blue);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        body.en-mode .step {
+            border-right: none;
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 8px 0 0 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside>
+        <div class="sidebar-header">Isatis Infrastructure</div>
+        <ul class="category-list">
+            <li class="category-item active" onclick="showSection('phase1')">فاز ۱: هویت و ذخیره‌سازی</li>
+            <li class="category-item" onclick="showSection('phase2')">فاز ۲: سرور و Coolify</li>
+            <li class="category-item" onclick="showSection('phase3')">فاز ۳: استقرار و دیتابیس</li>
+            <li class="category-item" onclick="showSection('phase4')">فاز ۴: مانیتورینگ و پایداری</li>
+        </ul>
+    </aside>
+
+    <main>
+        <header>
+            <input type="text" class="search-bar" id="search" placeholder="جستجو... (Search...)" onkeyup="doSearch()">
+            <button class="lang-toggle" onclick="toggleLang()">English / فارسی</button>
+        </header>
+
+        <div class="content-area" id="mainContent">
+
+            <div id="phase1" class="section active">
+                <h2 class="lang-fa">فاز ۱: فونداسیون، دامنه و ذخیره‌سازی</h2>
+                <h2 class="lang-en">Phase 1: Foundation, Domain & Storage</h2>
+
+                <div class="lang-fa">
+                    <h3>۱. خرید دامنه و مقایسه</h3>
+                    <p>برای برند <b>isatis.pro</b>، پلتفرم <b>Porkbun</b> انتخاب شد. دلیل: قیمت شفاف تمدید و WHOIS
+                        Privacy رایگان. در مقابل Namecheap که هزینه‌های پنهان دارد.</p>
+                    <h3>۲. تنظیمات Cloudflare</h3>
+                    <p>تمام رکوردهای DNS به کلودفلر منتقل شد تا از لایه امنیتی WAF استفاده شود.</p>
+                    <div class="step">
+                        <b>مراحل:</b><br>
+                        ۱. تغییر Nameservers در پنل Porkbun به آدرس‌های ارائه شده توسط کلودفلر.<br>
+                        ۲. فعال‌سازی پروکسی (ابر نارنجی) برای رکوردهای اصلی سایت.
+                    </div>
+                    <h3>۳. فضای ذخیره‌سازی R2</h3>
+                    <p>انتخاب R2 به دلیل <b>هزینه صفر خروجی (Egress Fee)</b>. تنظیم ساب‌دامین cdn.isatis.pro برای دسترسی
+                        مستقیم به فایل‌ها.</p>
+                </div>
+
+                <div class="lang-en">
+                    <h3>1. Domain Acquisition</h3>
+                    <p><b>Porkbun</b> was chosen for <b>isatis.pro</b> due to transparent renewal pricing and free WHOIS
+                        privacy, unlike competitors with hidden fees.</p>
+                    <h3>2. Cloudflare Setup</h3>
+                    <p>DNS records were migrated to Cloudflare to utilize its WAF security layer.</p>
+                    <div class="step">
+                        <b>Steps:</b><br>
+                        1. Change Nameservers in Porkbun to the ones provided by Cloudflare.<br>
+                        2. Enable Proxy (Orange Cloud) for main website records.
+                    </div>
+                    <h3>3. Cloudflare R2 Storage</h3>
+                    <p>Implemented R2 for its <b>Zero Egress Fees</b>. Configured cdn.isatis.pro as a custom domain for
+                        direct asset access.</p>
+                </div>
+            </div>
+
+            <div id="phase2" class="section">
+                <h2 class="lang-fa">فاز ۲: سرور، سیستم‌عامل و Coolify</h2>
+                <h2 class="lang-en">Phase 2: Server, OS & Coolify</h2>
+
+                <div class="lang-fa">
+                    <h3>۱. انتخاب سرور هتزنر</h3>
+                    <p>استفاده از سرور ابری هتزنر (Hetzner Cloud) با سیستم‌عامل Ubuntu 24.04. دلیل: پایداری بالا در
+                        اروپا.</p>
+                    <h3>۲. مهاجرت از CloudPanel به Coolify</h3>
+                    <p><b>تجربه:</b> کلودپنل برای PHP عالی است اما برای Next.js و داکر محدودیت داشت. کولفای جایگزین
+                        Vercel شد.</p>
+                    <h3>۳. نصب Coolify</h3>
+                    <pre>curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash</pre>
+                    <h3>۴. رفع باگ IPv6 (بسیار مهم)</h3>
+                    <p>شبکه IPv6 هتزنر باعث کرش کردن داکر می‌شود. برای حل آن:</p>
+                    <pre>nano /etc/docker/daemon.json
+# Add: "ipv6": false</pre>
+                </div>
+
+                <div class="lang-en">
+                    <h3>1. Hetzner Server Choice</h3>
+                    <p>Hetzner Cloud with Ubuntu 24.04 LTS was selected for its performance and European stability.</p>
+                    <h3>2. CloudPanel to Coolify Migration</h3>
+                    <p><b>Experience:</b> CloudPanel is great for PHP but limited for Docker. Coolify was chosen as an
+                        open-source Vercel alternative.</p>
+                    <h3>3. Coolify Installation</h3>
+                    <pre>curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash</pre>
+                    <h3>4. Critical IPv6 Fix</h3>
+                    <p>Hetzner's IPv6 network causes Traefik/Docker crashes. Fix:</p>
+                    <pre>nano /etc/docker/daemon.json
+# Add: "ipv6": false</pre>
+                </div>
+            </div>
+
+            <div id="phase3" class="section">
+                <h2 class="lang-fa">فاز ۳: استقرار و پایگاه داده</h2>
+                <h2 class="lang-en">Phase 3: Deployment & Database</h2>
+
+                <div class="lang-fa">
+                    <h3>۱. حل تفاوت پلتفرم (Mac vs Linux)</h3>
+                    <p>چون در مک کد می‌زنید، نصب پکیج‌ها در لینوکس با خطا مواجه می‌شود. راهکار در Coolify:</p>
+                    <pre>npm install --force --os=linux --cpu=x64</pre>
+                    <h3>۲. دستورات بیلد پریزما</h3>
+                    <p>برای اطمینان از ساخته شدن جداول قبل از بالا آمدن سایت:</p>
+                    <pre>npx prisma generate && npx prisma db push && npm run build</pre>
+                    <h3>۳. انتقال دیتابیس لوکال به سرور (Docker CP)</h3>
+                    <p>مرحله اول: ارسال به ریشه سرور با SCP. مرحله دوم: کپی به داخل کانتینر:</p>
+                    <pre>docker cp /root/dev.db <CONTAINER_ID>:/app/prisma/dev.db</pre>
+                </div>
+
+                <div class="lang-en">
+                    <h3>1. Platform Mismatch Fix (Mac vs Linux)</h3>
+                    <p>Since development is on Mac (ARM), use this in Coolify build settings to avoid EBADPLATFORM
+                        errors:</p>
+                    <pre>npm install --force --os=linux --cpu=x64</pre>
+                    <h3>2. Prisma Build Pipeline</h3>
+                    <p>Ensure DB schema is pushed before Next.js build starts:</p>
+                    <pre>npx prisma generate && npx prisma db push && npm run build</pre>
+                    <h3>3. Database Injection (Docker CP)</h3>
+                    <p>Step 1: SCP file to server. Step 2: Copy into the isolated container:</p>
+                    <pre>docker cp /root/dev.db <CONTAINER_ID>:/app/prisma/dev.db</pre>
+                </div>
+            </div>
+
+            <div id="phase4" class="section">
+                <h2 class="lang-fa">فاز ۴: پایداری، مانیتورینگ و نگهداری</h2>
+                <h2 class="lang-en">Phase 4: Stability, Monitoring & Maintenance</h2>
+
+                <div class="lang-fa">
+                    <h3>۱. ساخت حافظه Swap (رم مجازی)</h3>
+                    <p>جلوگیری از کرش کردن سرور ۲ گیگابایتی در زمان بیلد سنگین:</p>
+                    <pre>fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile</pre>
+                    <h3>۲. مانیتورینگ دوگانه</h3>
+                    <p><b>Uptime Kuma:</b> مانیتورینگ سایت از بیرون (نصب در Coolify).<br>
+                        <b>Netdata:</b> مانیتورینگ سخت‌افزار از داخل (نصب در لینوکس).
+                    </p>
+                    <h3>۳. هشدار تلگرام</h3>
+                    <p>اتصال Bot Token و Chat ID به هر دو برنامه برای دریافت نوتیفیکیشن روی گوشی.</p>
+                    <h3>۴. تحلیل دیسک و آپدیت</h3>
+                    <p>چک کردن فضای هارد با <code>df -h</code> و آپدیت پکیج‌ها با <code>apt upgrade</code>.</p>
+                </div>
+
+                <div class="lang-en">
+                    <h3>1. Creating 4GB Swap (Virtual RAM)</h3>
+                    <p>Prevents OOM crashes during heavy Next.js/Dart builds on 2GB RAM:</p>
+                    <pre>fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile</pre>
+                    <h3>2. Dual Monitoring</h3>
+                    <p><b>Uptime Kuma:</b> External availability checks.<br>
+                        <b>Netdata:</b> Internal hardware health metrics.
+                    </p>
+                    <h3>3. Telegram Bot Alerts</h3>
+                    <p>Integrated Bot Token and Chat ID to receive instant alerts for downtime or high RAM usage.</p>
+                    <h3>4. Maintenance</h3>
+                    <p>Regular OS updates and disk cleanup using <code>docker system df</code>.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function toggleLang() {
+            document.body.classList.toggle('en-mode');
+        }
+
+        function doSearch() {
+            let query = document.getElementById('search').value.toLowerCase();
+            let contents = document.querySelectorAll('.section div p, .section h3, .section pre');
+            contents.forEach(el => {
+                if (el.innerText.toLowerCase().includes(query)) {
+                    el.style.backgroundColor = "rgba(59, 130, 246, 0.3)";
+                } else {
+                    el.style.backgroundColor = "transparent";
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
