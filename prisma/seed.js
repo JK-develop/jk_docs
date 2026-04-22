@@ -1,5 +1,5 @@
 // @ts-check
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../src/generated/client");
 const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
 
 const adapter = new PrismaBetterSqlite3({ url: "file:./dev.db" });

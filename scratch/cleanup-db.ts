@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../src/generated/client';
 
 const prisma = new PrismaClient();
 
@@ -6,7 +6,7 @@ async function main() {
   console.log('Cleaning up database...');
   
   // Order matters for relational integrity if not using cascade
-  await prisma.article.deleteMany({});
+  await prisma.guide.deleteMany({});
   await prisma.category.deleteMany({});
 
   console.log('Database cleared successfully.');
