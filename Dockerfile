@@ -18,7 +18,7 @@ COPY . .
 
 # Generate Prisma client and create temporary schema for build-time pre-rendering
 RUN npx prisma generate
-RUN npx prisma db push --accept-data-loss --skip-generate
+RUN npx prisma db push --accept-data-loss
 RUN npm run build
 
 # Ensure start script is executable
