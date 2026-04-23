@@ -1042,18 +1042,21 @@ export namespace Prisma {
     id: number | null
     slug: string | null
     name: string | null
+    icon: string | null
   }
 
   export type CategoryMaxAggregateOutputType = {
     id: number | null
     slug: string | null
     name: string | null
+    icon: string | null
   }
 
   export type CategoryCountAggregateOutputType = {
     id: number
     slug: number
     name: number
+    icon: number
     _all: number
   }
 
@@ -1070,18 +1073,21 @@ export namespace Prisma {
     id?: true
     slug?: true
     name?: true
+    icon?: true
   }
 
   export type CategoryMaxAggregateInputType = {
     id?: true
     slug?: true
     name?: true
+    icon?: true
   }
 
   export type CategoryCountAggregateInputType = {
     id?: true
     slug?: true
     name?: true
+    icon?: true
     _all?: true
   }
 
@@ -1175,6 +1181,7 @@ export namespace Prisma {
     id: number
     slug: string
     name: string
+    icon: string | null
     _count: CategoryCountAggregateOutputType | null
     _avg: CategoryAvgAggregateOutputType | null
     _sum: CategorySumAggregateOutputType | null
@@ -1200,6 +1207,7 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     name?: boolean
+    icon?: boolean
     guides?: boolean | Category$guidesArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
@@ -1208,21 +1216,24 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     name?: boolean
+    icon?: boolean
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
     name?: boolean
+    icon?: boolean
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectScalar = {
     id?: boolean
     slug?: boolean
     name?: boolean
+    icon?: boolean
   }
 
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name", ExtArgs["result"]["category"]>
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "icon", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     guides?: boolean | Category$guidesArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -1239,6 +1250,7 @@ export namespace Prisma {
       id: number
       slug: string
       name: string
+      icon: string | null
     }, ExtArgs["result"]["category"]>
     composites: {}
   }
@@ -1666,6 +1678,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Category", 'Int'>
     readonly slug: FieldRef<"Category", 'String'>
     readonly name: FieldRef<"Category", 'String'>
+    readonly icon: FieldRef<"Category", 'String'>
   }
     
 
@@ -3246,7 +3259,8 @@ export namespace Prisma {
   export const CategoryScalarFieldEnum: {
     id: 'id',
     slug: 'slug',
-    name: 'name'
+    name: 'name',
+    icon: 'icon'
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -3324,6 +3338,7 @@ export namespace Prisma {
     id?: IntFilter<"Category"> | number
     slug?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
+    icon?: StringNullableFilter<"Category"> | string | null
     guides?: GuideListRelationFilter
   }
 
@@ -3331,6 +3346,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    icon?: SortOrderInput | SortOrder
     guides?: GuideOrderByRelationAggregateInput
   }
 
@@ -3341,6 +3357,7 @@ export namespace Prisma {
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     name?: StringFilter<"Category"> | string
+    icon?: StringNullableFilter<"Category"> | string | null
     guides?: GuideListRelationFilter
   }, "id" | "slug">
 
@@ -3348,6 +3365,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    icon?: SortOrderInput | SortOrder
     _count?: CategoryCountOrderByAggregateInput
     _avg?: CategoryAvgOrderByAggregateInput
     _max?: CategoryMaxOrderByAggregateInput
@@ -3362,6 +3380,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Category"> | number
     slug?: StringWithAggregatesFilter<"Category"> | string
     name?: StringWithAggregatesFilter<"Category"> | string
+    icon?: StringNullableWithAggregatesFilter<"Category"> | string | null
   }
 
   export type GuideWhereInput = {
@@ -3434,6 +3453,7 @@ export namespace Prisma {
   export type CategoryCreateInput = {
     slug: string
     name: string
+    icon?: string | null
     guides?: GuideCreateNestedManyWithoutCategoriesInput
   }
 
@@ -3441,12 +3461,14 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    icon?: string | null
     guides?: GuideUncheckedCreateNestedManyWithoutCategoriesInput
   }
 
   export type CategoryUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     guides?: GuideUpdateManyWithoutCategoriesNestedInput
   }
 
@@ -3454,6 +3476,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     guides?: GuideUncheckedUpdateManyWithoutCategoriesNestedInput
   }
 
@@ -3461,17 +3484,20 @@ export namespace Prisma {
     id?: number
     slug: string
     name: string
+    icon?: string | null
   }
 
   export type CategoryUpdateManyMutationInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GuideCreateInput = {
@@ -3570,10 +3596,29 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type GuideListRelationFilter = {
     every?: GuideWhereInput
     some?: GuideWhereInput
     none?: GuideWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type GuideOrderByRelationAggregateInput = {
@@ -3584,6 +3629,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
   }
 
   export type CategoryAvgOrderByAggregateInput = {
@@ -3594,12 +3640,14 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
   }
 
   export type CategoryMinOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
   }
 
   export type CategorySumOrderByAggregateInput = {
@@ -3639,7 +3687,7 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -3650,7 +3698,10 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -3668,11 +3719,6 @@ export namespace Prisma {
     every?: CategoryWhereInput
     some?: CategoryWhereInput
     none?: CategoryWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type CategoryOrderByRelationAggregateInput = {
@@ -3717,23 +3763,6 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -3762,6 +3791,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type GuideUpdateManyWithoutCategoriesNestedInput = {
@@ -3808,10 +3841,6 @@ export namespace Prisma {
     create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput> | CategoryCreateWithoutGuidesInput[] | CategoryUncheckedCreateWithoutGuidesInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput | CategoryCreateOrConnectWithoutGuidesInput[]
     connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -3869,6 +3898,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -3913,31 +3956,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -3964,6 +3982,17 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4036,12 +4065,14 @@ export namespace Prisma {
   export type CategoryCreateWithoutGuidesInput = {
     slug: string
     name: string
+    icon?: string | null
   }
 
   export type CategoryUncheckedCreateWithoutGuidesInput = {
     id?: number
     slug: string
     name: string
+    icon?: string | null
   }
 
   export type CategoryCreateOrConnectWithoutGuidesInput = {
@@ -4072,6 +4103,7 @@ export namespace Prisma {
     id?: IntFilter<"Category"> | number
     slug?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
+    icon?: StringNullableFilter<"Category"> | string | null
   }
 
   export type GuideUpdateWithoutCategoriesInput = {
@@ -4106,18 +4138,21 @@ export namespace Prisma {
   export type CategoryUpdateWithoutGuidesInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CategoryUncheckedUpdateWithoutGuidesInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CategoryUncheckedUpdateManyWithoutGuidesInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

@@ -3,7 +3,8 @@
 import { deleteGuide, deleteCategory } from "@/lib/actions";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Edit2, Trash2, FileText, ChevronRight, Hash } from "lucide-react";
+import { Edit2, Trash2, FileText, ChevronRight, Hash, Layers } from "lucide-react";
+import { DynamicIcon } from "@/components/IconPicker";
 
 export function AdminClientList({ categories }: { categories: any[] }) {
   const router = useRouter();
@@ -34,7 +35,7 @@ export function AdminClientList({ categories }: { categories: any[] }) {
           <div className="p-6 md:p-8 bg-white/5 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-lime-500/10 flex items-center justify-center border border-lime-500/20 shadow-[0_0_20px_rgba(163,230,53,0.1)]">
-                <Hash className="w-6 h-6 accent-green" />
+                <DynamicIcon name={cat.icon} className="w-6 h-6 accent-green" fallback={Layers} />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-app">{cat.name}</h3>

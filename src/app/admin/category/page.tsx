@@ -5,6 +5,7 @@ import { createCategory, updateCategory, getCategories } from "@/lib/actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import slugify from "slugify";
 import { Layers, ArrowLeft, Loader2, Save } from "lucide-react";
+import { IconPicker } from "@/components/IconPicker";
 
 function CategoryForm() {
   const router = useRouter();
@@ -13,6 +14,7 @@ function CategoryForm() {
   
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
+  const [icon, setIcon] = useState("Layers");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +27,7 @@ function CategoryForm() {
         if (cat) {
           setName(cat.name);
           setSlug(cat.slug);
+          if (cat.icon) setIcon(cat.icon);
         }
         setIsLoading(false);
       };
@@ -41,9 +44,9 @@ function CategoryForm() {
       const finalSlug = slug.trim() || slugify(name, { lower: true, strict: true }) || `cat-${Date.now()}`;
       
       if (categoryId) {
-        await updateCategory(Number(categoryId), { name, slug: finalSlug });
+        await updateCategory(Number(categoryId), { name, slug: finalSlug, icon });
       } else {
-        await createCategory({ name, slug: finalSlug });
+        await createCategory({ name, slug: finalSlug, icon });
       }
       router.push("/admin");
       router.refresh();
@@ -113,6 +116,11 @@ function CategoryForm() {
                 required
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-app ml-1">Select Icon</label>
+            <IconPicker value={icon} onChange={setIcon} />
           </div>
 
           <div className="pt-4">

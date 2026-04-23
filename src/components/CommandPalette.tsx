@@ -3,8 +3,9 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "./Providers";
-import { Search, X, Loader2, Book, FileText, ChevronRight, Hash, Clock } from "lucide-react";
+import { Search, X, Loader2, Book, FileText, ChevronRight, Hash, Clock, Layers } from "lucide-react";
 import { searchGuides } from "@/lib/actions";
+import { DynamicIcon } from "./IconPicker";
 
 export function CommandPalette() {
   const { isSearchOpen, setIsSearchOpen } = useAppContext();
@@ -44,6 +45,7 @@ export function CommandPalette() {
       id: g.id,
       title: g.title,
       category: g.categories?.[0]?.name || "General",
+      icon: g.categories?.[0]?.icon,
       section: g.categories?.length > 1 ? `+${g.categories.length - 1} more` : "Docs",
       tags: g.tags ? g.tags.split(",").map((t: string) => t.trim()) : [],
       slug: g.slug,
@@ -168,7 +170,7 @@ export function CommandPalette() {
                         w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors
                         ${i === selectedIndex ? 'bg-[color:var(--accent-green)] text-white dark:text-black' : 'glass-input text-muted'}
                       `}>
-                        <FileText className="w-5 h-5" />
+                        <DynamicIcon name={r.icon} className="w-5 h-5" fallback={FileText} />
                       </div>
                       <div className="overflow-hidden">
                         <div className="flex items-center gap-2 mb-0.5">

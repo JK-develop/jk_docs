@@ -23,8 +23,10 @@ import {
   Lock,
   Shield,
   Wrench,
-  Palette
+  Palette,
+  BookOpen as FallbackIcon
 } from "lucide-react";
+import { DynamicIcon } from "./IconPicker";
 
 export function Sidebar({ categories = [] }: { categories?: any[] }) {
   const pathname = usePathname();
@@ -49,23 +51,6 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
     return onCategoriesUpdated(() => setLocalCategories(loadLocalCategories()));
   }, []);
 
-  const getIcon = (name: string, iconKey?: CategoryIconKey) => {
-    if (iconKey === "database") return Database;
-    if (iconKey === "server") return Server;
-    if (iconKey === "code") return Code2;
-    if (iconKey === "globe") return Globe;
-    if (iconKey === "terminal") return Terminal;
-    if (iconKey === "cpu") return Cpu;
-
-    if (name.includes("Frontend")) return Layout;
-    if (name.includes("Backend")) return Terminal;
-    if (name.includes("DevOps")) return Cpu;
-    if (name.includes("Database")) return Database;
-    if (name.includes("Security")) return Shield;
-    if (name.includes("Tools")) return Wrench;
-    if (name.includes("Design")) return Palette;
-    return BookOpen;
-  };
 
   return (
     <>
@@ -138,7 +123,6 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Categories</p>
             </div>
             {allCategories.map((category) => {
-              const Icon = getIcon(category.name, (category as any).iconKey);
               const isActive = pathname === '/' && currentCategory === category.name;
               
               return (
@@ -153,7 +137,11 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
                       : 'text-muted hover:text-app hover:bg-white/5 border border-transparent'}
                   `}
                 >
-                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'accent-green' : 'group-hover:accent-green'}`} />
+                  <DynamicIcon 
+                    name={category.icon} 
+                    className={`w-4 h-4 transition-colors ${isActive ? 'accent-green' : 'group-hover:accent-green'}`} 
+                    fallback={FallbackIcon}
+                  />
                   <span className="text-sm">{category.name}</span>
                 </Link>
               );

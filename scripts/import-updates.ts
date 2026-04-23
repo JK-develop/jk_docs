@@ -10,10 +10,11 @@ async function main() {
   // 1. Create or get "System Admin" category
   const category = await prisma.category.upsert({
     where: { slug: "system-admin" },
-    update: {},
+    update: { icon: "Shield" },
     create: { 
       slug: "system-admin", 
-      name: "System Admin" 
+      name: "System Admin",
+      icon: "Shield"
     },
   });
 

@@ -10,44 +10,44 @@ async function main() {
   // -- Categories --
   const devops = await prisma.category.upsert({
     where: { slug: "devops" },
-    update: {},
-    create: { slug: "devops", name: "DevOps" },
+    update: { icon: "Cpu" },
+    create: { slug: "devops", name: "DevOps", icon: "Cpu" },
   });
 
   const backend = await prisma.category.upsert({
     where: { slug: "backend" },
-    update: {},
-    create: { slug: "backend", name: "Backend" },
+    update: { icon: "Terminal" },
+    create: { slug: "backend", name: "Backend", icon: "Terminal" },
   });
 
   const frontend = await prisma.category.upsert({
     where: { slug: "frontend" },
-    update: {},
-    create: { slug: "frontend", name: "Frontend" },
+    update: { icon: "Layout" },
+    create: { slug: "frontend", name: "Frontend", icon: "Layout" },
   });
 
   const database = await prisma.category.upsert({
     where: { slug: "database" },
-    update: {},
-    create: { slug: "database", name: "Database" },
+    update: { icon: "Database" },
+    create: { slug: "database", name: "Database", icon: "Database" },
   });
 
   const tools = await prisma.category.upsert({
     where: { slug: "tools" },
-    update: {},
-    create: { slug: "tools", name: "Tools" },
+    update: { icon: "Wrench" },
+    create: { slug: "tools", name: "Tools", icon: "Wrench" },
   });
 
   const security = await prisma.category.upsert({
     where: { slug: "security" },
-    update: {},
-    create: { slug: "security", name: "Security" },
+    update: { icon: "Shield" },
+    create: { slug: "security", name: "Security", icon: "Shield" },
   });
 
   const design = await prisma.category.upsert({
     where: { slug: "design" },
-    update: {},
-    create: { slug: "design", name: "Design" },
+    update: { icon: "Palette" },
+    create: { slug: "design", name: "Design", icon: "Palette" },
   });
 
   // Reference to suppress "unused" lint warning
