@@ -4,16 +4,16 @@ import React from "react";
 import { 
   Layers, Terminal, Database, Globe, Shield, Cpu, Layout, Wrench, 
   Book, Code, Settings, Server, Cloud, Smartphone, Monitor, Zap, 
-  Lock, Key, Box, Package, Github, Infinity, Network, HardDrive, 
-  Activity, BarChart, Folder, FileText, Search, Menu, LucideIcon 
+  Lock, Key, Box, Package, GitBranch, Activity, BarChart, Folder, 
+  FileText, Search, Menu, LucideIcon 
 } from "lucide-react";
 
 // Manual mapping to ensure production bundling works correctly
 export const ICON_MAP: Record<string, LucideIcon> = {
   Layers, Terminal, Database, Globe, Shield, Cpu, Layout, Wrench, 
   Book, Code, Settings, Server, Cloud, Smartphone, Monitor, Zap, 
-  Lock, Key, Box, Package, Github, Infinity, Network, HardDrive, 
-  Activity, BarChart, Folder, FileText, Search, Menu
+  Lock, Key, Box, Package, GitBranch, Activity, BarChart, Folder, 
+  FileText, Search, Menu
 };
 
 export const AVAILABLE_ICONS = Object.entries(ICON_MAP).map(([name, icon]) => ({
