@@ -4,6 +4,8 @@ import { AdminClientList } from "./AdminClientList";
 import { Plus, Settings, BookOpen, Layers, LogOut } from "lucide-react";
 import { logoutAdmin } from "@/lib/actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const categories = await getCategories();
   const totalGuides = categories.reduce((acc, cat) => acc + (cat.guides?.length || 0), 0);

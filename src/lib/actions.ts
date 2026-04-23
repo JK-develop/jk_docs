@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function getCategories() {
-  return await prisma.category.findMany({
+  const cats = await prisma.category.findMany({
     include: {
       guides: {
         include: {
@@ -18,6 +18,8 @@ export async function getCategories() {
       id: "asc",
     },
   });
+  console.log(`DEBUG: getCategories returned ${cats.length} items`);
+  return cats;
 }
 
 export async function getGuideBySlug(slug: string) {
@@ -65,7 +67,6 @@ export async function searchGuides(query: string) {
 
 // Admin Actions
 export async function createCategory(data: { slug: string; name: string; icon?: string }) {
-  console.log("DEBUG: prisma.category keys:", Object.keys(prisma.category));
   try {
     return await prisma.category.create({ 
       data: {
