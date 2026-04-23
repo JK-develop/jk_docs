@@ -20,7 +20,7 @@ import { useLanguage } from "@/components/LanguageContext";
 interface Category {
   id: number | string;
   name: string;
-  nameFa?: string;
+  nameFa?: string | null;
 }
 
 interface KnowledgeFormProps {
