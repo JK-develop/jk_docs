@@ -1,5 +1,5 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+const Database = require('better-sqlite3');
+const path = require('path');
 
 const dbPath = path.resolve(process.cwd(), 'prisma/dev.db');
 
@@ -8,8 +8,8 @@ try {
   console.log("🔍 Checking for database migration from 1:N to M:N...");
 
   // Check if Guide table exists and has categoryId column
-  const tableInfo: any = db.prepare("PRAGMA table_info(Guide)").all();
-  const hasCategoryId = tableInfo.some((c: any) => c.name === 'categoryId');
+  const tableInfo = db.prepare("PRAGMA table_info(Guide)").all();
+  const hasCategoryId = tableInfo.some((c) => c.name === 'categoryId');
 
   if (hasCategoryId) {
     console.log("📦 Found old categoryId column. Migrating relationships...");
@@ -39,6 +39,6 @@ try {
   
   db.close();
 } catch (error) {
-  console.log("⚠️ Migration script finished (it may fail if the database file is not yet created, which is normal on first deploy).");
+  console.log("⚠️ Migration script finished or skipped (normal on first deploy or if DB is busy).");
   console.error("Details:", error);
 }

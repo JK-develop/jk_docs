@@ -5,7 +5,7 @@ echo "🚀 Starting application initialization..."
 
 # 1. Run the custom migration script to save 1:N data before Prisma drops the column
 echo "🛠️ Running custom relationship migration..."
-npx tsx prisma/migrate-mn.ts
+node prisma/migrate-mn.js
 
 # 2. Push the new schema to the database (in the persistent volume)
 # We use --accept-data-loss because we are dropping the categoryId column, 
