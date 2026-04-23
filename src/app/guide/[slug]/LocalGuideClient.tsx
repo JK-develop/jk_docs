@@ -3,8 +3,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { loadLocalGuides, onGuidesUpdated, type LocalGuide } from "@/lib/localGuides";
+import { useLanguage } from "@/components/LanguageContext";
 
 export function LocalGuideClient({ slug }: { slug: string }) {
+  const { isRTL } = useLanguage();
   const [guides, setGuides] = useState<LocalGuide[]>([]);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export function LocalGuideClient({ slug }: { slug: string }) {
         <div className="mb-5 flex flex-wrap gap-2">
           {(guide.categories || (guide.category ? [guide.category] : [])).map((c: any) => (
             <span key={c.name} className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-extrabold tracking-wide uppercase bg-[color:rgba(163,230,53,0.12)] border border-[color:rgba(163,230,53,0.25)] accent-green">
-              {c.name}
+              {isRTL && c.nameFa ? c.nameFa : c.name}
             </span>
           ))}
           {!(guide.categories || guide.category) && (

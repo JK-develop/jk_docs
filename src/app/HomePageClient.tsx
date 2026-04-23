@@ -15,7 +15,7 @@ type Guide = {
   tags?: string | null;
   createdAt: any;
   updatedAt: any;
-  categories: { id: number; slug: string; name: string }[];
+  categories: { id: number; slug: string; name: string; nameFa?: string | null }[];
 };
 
 function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
