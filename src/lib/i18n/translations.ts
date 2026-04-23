@@ -1,0 +1,168 @@
+export type Language = "en" | "fa";
+
+export const translations = {
+  en: {
+    // General
+    site_title: "JK Wiki",
+    site_tagline: "Your personal technical knowledge base, unified and searchable.",
+    search_placeholder: "Search guides, code snippets, or tags...",
+    search_results: "Search Results",
+    recently_added: "Recently Added",
+    no_results: "No results found for",
+    try_other: "Try searching for other keywords, categories, or tags.",
+    navigation_shortcuts: "to navigate",
+    select_shortcut: "to select",
+    close_shortcut: "to close",
+
+    // Sidebar
+    new_guide: "New Guide",
+    categories_label: "Categories",
+    all_guides: "All Guides",
+    admin_panel: "Admin Panel",
+
+    // Home
+    load_more: "Load More",
+
+    // Admin Dashboard
+    admin_dashboard: "Admin Dashboard",
+    admin_tagline: "Manage your content, categories, and site settings.",
+    total_guides: "Total Guides",
+    total_categories: "Categories",
+    add_new_guide: "Add New Guide",
+    add_category: "Add Category",
+    content_management: "Content Management",
+    logout: "Logout",
+    edit_category: "Edit Category",
+    delete_category: "Delete Category",
+    edit_guide: "Edit Guide",
+    delete_guide: "Delete Guide",
+    view_guide: "View Guide",
+    no_guides_category: "No guides in this category yet.",
+    last_updated: "Last Updated",
+    title_slug: "Title / Slug",
+    actions: "Actions",
+
+    // Category Editor
+    new_category_title: "New Category",
+    edit_category_title: "Edit Category",
+    category_org_tagline: "Organize your guides into logical collections.",
+    category_name: "Category Name",
+    category_slug: "Slug (URL Path)",
+    select_icon: "Select Icon",
+    select_language: "Select Language",
+    create_category_btn: "Create Category",
+    update_category_btn: "Update Category",
+    back_to_dashboard: "Back to Dashboard",
+
+    // Guide Editor
+    new_guide_title: "Create New",
+    edit_guide_title: "Edit",
+    guide_knowledge_tagline: "Add and organize technical knowledge.",
+    guide_title: "Guide Title",
+    guide_title_placeholder: "Enter a descriptive title...",
+    guide_slug: "Slug",
+    guide_tags: "Tags (comma separated)",
+    guide_content: "Content (Markdown)",
+    guide_content_placeholder: "Write or paste Markdown here...",
+    select_categories: "Select Categories",
+    select_at_least_one: "Please select at least one category.",
+    press_enter_to_add: "Press Enter to add...",
+    save_guide: "Save Guide",
+    discard: "Discard",
+    preview: "Preview",
+    write: "Write",
+    add_knowledge: "Add Knowledge",
+    create_guide_desc: "Create structured documentation.",
+    saving: "Saving...",
+    saved: "Saved",
+    save: "Save",
+    
+    // Auth
+    login_title: "Admin Login",
+    password: "Password",
+    login_btn: "Login",
+    invalid_pass: "Invalid password",
+  },
+  fa: {
+    // General
+    site_title: "دانشنامه JK",
+    site_tagline: "پایگاه دانش فنی شخصی شما، یکپارچه و قابل جستجو.",
+    search_placeholder: "جستجوی راهنماها، قطعه کدها یا برچسب‌ها...",
+    search_results: "نتایج جستجو",
+    recently_added: "به تازگی اضافه شده",
+    no_results: "نتیجه‌ای برای این عبارت یافت نشد:",
+    try_other: "کلمات کلیدی، دسته‌بندی‌ها یا برچسب‌های دیگری را امتحان کنید.",
+    navigation_shortcuts: "برای جابجایی",
+    select_shortcut: "برای انتخاب",
+    close_shortcut: "برای بستن",
+
+    // Sidebar
+    new_guide: "راهنمای جدید",
+    categories_label: "دسته‌بندی‌ها",
+    all_guides: "همه راهنماها",
+    admin_panel: "پنل مدیریت",
+
+    // Home
+    load_more: "مشاهده بیشتر",
+
+    // Admin Dashboard
+    admin_dashboard: "داشبورد مدیریت",
+    admin_tagline: "محتوا، دسته‌بندی‌ها و تنظیمات سایت خود را مدیریت کنید.",
+    total_guides: "تعداد کل راهنماها",
+    total_categories: "دسته‌بندی‌ها",
+    add_new_guide: "افزودن راهنمای جدید",
+    add_category: "افزودن دسته‌بندی",
+    content_management: "مدیریت محتوا",
+    logout: "خروج",
+    edit_category: "ویرایش دسته‌بندی",
+    delete_category: "حذف دسته‌بندی",
+    edit_guide: "ویرایش راهنما",
+    delete_guide: "حذف راهنما",
+    view_guide: "مشاهده راهنما",
+    no_guides_category: "هنوز راهنمایی در این دسته‌بندی وجود ندارد.",
+    last_updated: "آخرین بروزرسانی",
+    title_slug: "عنوان / اسلاگ",
+    actions: "عملیات",
+
+    // Category Editor
+    new_category_title: "دسته‌بندی جدید",
+    edit_category_title: "ویرایش دسته‌بندی",
+    category_org_tagline: "راهنماهای خود را در مجموعه‌های منطقی سازماندهی کنید.",
+    category_name: "نام دسته‌بندی",
+    category_slug: "اسلاگ (مسیر URL)",
+    select_icon: "انتخاب آیکون",
+    select_language: "انتخاب زبان",
+    create_category_btn: "ایجاد دسته‌بندی",
+    update_category_btn: "بروزرسانی دسته‌بندی",
+    back_to_dashboard: "بازگشت به داشبورد",
+
+    // Guide Editor
+    new_guide_title: "ایجاد جدید",
+    edit_guide_title: "ویرایش",
+    guide_knowledge_tagline: "دانش فنی را اضافه و سازماندهی کنید.",
+    guide_title: "عنوان راهنما",
+    guide_title_placeholder: "یک عنوان توصیفی وارد کنید...",
+    guide_slug: "اسلاگ",
+    guide_tags: "برچسب‌ها (با کاما جدا کنید)",
+    guide_content: "محتوا (Markdown)",
+    guide_content_placeholder: "محتوای خود را اینجا بنویسید یا کپی کنید...",
+    select_categories: "انتخاب دسته‌بندی‌ها",
+    select_at_least_one: "لطفاً حداقل یک دسته‌بندی انتخاب کنید.",
+    press_enter_to_add: "برای افزودن اینتر بزنید...",
+    save_guide: "ذخیره راهنما",
+    discard: "انصراف",
+    preview: "پیش‌نمایش",
+    write: "نوشتن",
+    add_knowledge: "افزودن دانش",
+    create_guide_desc: "مستندات ساختاریافته ایجاد کنید.",
+    saving: "در حال ذخیره...",
+    saved: "ذخیره شد",
+    save: "ذخیره",
+
+    // Auth
+    login_title: "ورود مدیریت",
+    password: "رمز عبور",
+    login_btn: "ورود",
+    invalid_pass: "رمز عبور اشتباه است",
+  },
+};

@@ -5,9 +5,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useLanguage } from "@/components/LanguageContext";
 
 function CopyButton({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
+  const { t } = useLanguage();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
@@ -37,10 +39,12 @@ function CopyButton({ code }: { code: string }) {
 }
 
 export function GuideClient({ guide }: { guide: any }) {
-  if (!guide) return <div>Guide not found!</div>;
+  const { t, isRTL } = useLanguage();
+  
+  if (!guide) return <div className="text-center py-20 text-muted">{t("no_results")}</div>;
 
   return (
-    <div className="animate-fade-in-up" 
+    <div className={`animate-fade-in-up ${isRTL ? 'rtl' : 'ltr'}`} 
          style={{ 
            maxWidth: '900px', 
            margin: '0 auto', 
@@ -63,15 +67,17 @@ export function GuideClient({ guide }: { guide: any }) {
           fontWeight: 800,
           letterSpacing: '-0.02em',
           margin: 0,
+          lineHeight: 1.2
         }}>{guide.title}</h1>
         <p style={{ color: 'var(--text-secondary)', marginTop: '12px', fontSize: '1.1rem' }}>
-          Last updated: {new Date(guide.updatedAt).toLocaleDateString()}
+          {isRTL ? 'آخرین بروزرسانی: ' : 'Last updated: '} {new Date(guide.updatedAt).toLocaleDateString(isRTL ? 'fa-IR' : 'en-US')}
         </p>
       </header>
 
       <div
         className="prose prose-invert prose-lg max-w-none"
         style={{
+          textAlign: isRTL ? 'right' : 'left',
           /* Override prose defaults for our dark theme */
           "--tw-prose-body": "#cbd5e1",
           "--tw-prose-headings": "#f8fafc",
@@ -99,7 +105,7 @@ export function GuideClient({ guide }: { guide: any }) {
               const codeString = String(children).replace(/\n$/, '');
               
               return !inline && match ? (
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: 'relative', direction: 'ltr' }}>
                   <CopyButton code={codeString} />
                   <SyntaxHighlighter
                     style={atomDark as any}
@@ -130,5 +136,3 @@ export function GuideClient({ guide }: { guide: any }) {
     </div>
   );
 }
-
-

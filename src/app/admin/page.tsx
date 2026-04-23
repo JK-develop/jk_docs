@@ -3,10 +3,12 @@ import Link from "next/link";
 import { AdminClientList } from "./AdminClientList";
 import { Plus, Settings, BookOpen, Layers, LogOut } from "lucide-react";
 import { logoutAdmin } from "@/lib/actions";
+import { getServerTranslation } from "@/lib/i18n/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
+  const { t } = await getServerTranslation();
   const categories = await getCategories();
   const totalGuides = categories.reduce((acc, cat) => acc + (cat.guides?.length || 0), 0);
 
@@ -15,16 +17,16 @@ export default async function AdminPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-app">
-            Admin <span className="accent-green">Dashboard</span>
+            {t("admin_dashboard").split(' ')[0]} <span className="accent-green">{t("admin_dashboard").split(' ').slice(1).join(' ')}</span>
           </h1>
-          <p className="text-muted mt-2">Manage your content, categories, and site settings.</p>
+          <p className="text-muted mt-2">{t("admin_tagline")}</p>
         </div>
         
         <div className="flex items-center gap-3">
            <form action={logoutAdmin}>
              <button type="submit" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-muted hover:text-red-400 hover:border-red-400/30 transition-all">
                <LogOut className="w-4 h-4" />
-               <span className="text-sm font-semibold">Logout</span>
+               <span className="text-sm font-semibold">{t("logout")}</span>
              </button>
            </form>
         </div>
@@ -37,7 +39,7 @@ export default async function AdminPage() {
             <div className="w-10 h-10 rounded-xl bg-lime-500/10 flex items-center justify-center">
               <BookOpen className="w-5 h-5 accent-green" />
             </div>
-            <span className="text-sm font-bold text-muted uppercase tracking-wider">Total Guides</span>
+            <span className="text-sm font-bold text-muted uppercase tracking-wider">{t("total_guides")}</span>
           </div>
           <p className="text-4xl font-extrabold text-app">{totalGuides}</p>
         </div>
@@ -47,7 +49,7 @@ export default async function AdminPage() {
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
               <Layers className="w-5 h-5 text-purple-400" />
             </div>
-            <span className="text-sm font-bold text-muted uppercase tracking-wider">Categories</span>
+            <span className="text-sm font-bold text-muted uppercase tracking-wider">{t("total_categories")}</span>
           </div>
           <p className="text-4xl font-extrabold text-app">{categories.length}</p>
         </div>
@@ -60,21 +62,21 @@ export default async function AdminPage() {
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-lime-500 to-lime-400 text-black font-bold shadow-lg shadow-lime-500/10 hover:scale-105 transition-all"
         >
           <Plus className="w-5 h-5" />
-          Add New Guide
+          {t("add_new_guide")}
         </Link>
         <Link 
           href="/admin/category" 
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-app font-bold hover:bg-white/10 transition-all"
         >
           <Plus className="w-5 h-5 accent-green" />
-          Add Category
+          {t("add_category")}
         </Link>
       </div>
 
       <div className="space-y-8">
         <div className="flex items-center gap-3 px-2">
           <Settings className="w-5 h-5 text-muted" />
-          <h2 className="text-xl font-bold text-app">Content Management</h2>
+          <h2 className="text-xl font-bold text-app">{t("content_management")}</h2>
         </div>
         <AdminClientList categories={categories} />
       </div>

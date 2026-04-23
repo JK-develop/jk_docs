@@ -4,6 +4,7 @@ import React from "react";
 import { Menu, Search, Moon, Sun } from "lucide-react";
 import { useAppContext } from "./Providers";
 import Link from "next/link";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header({ categories = [] }: { categories?: any[] }) {
   const { toggleSidebar } = useAppContext();
@@ -27,9 +28,10 @@ export function Header({ categories = [] }: { categories?: any[] }) {
           </Link>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <LanguageSwitcher />
           <button 
-            className="p-2 text-muted hover:text-app"
+            className="p-1.5 text-muted hover:text-app"
             onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
           >
             <Search className="w-5 h-5" />

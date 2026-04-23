@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getGuides } from "@/lib/actions";
 import { Search, Hash, Plus, Loader2 } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 type Guide = {
   id: number;
@@ -18,6 +19,7 @@ type Guide = {
 };
 
 function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
+  const { t, isRTL } = useLanguage();
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get("category");
   const [guides, setGuides] = useState<Guide[]>(initialGuides);
@@ -56,18 +58,22 @@ function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-app">
           {categoryFilter ? (
             <>
-              Explore <span className="accent-green">{categoryFilter}</span> Guides
+              {isRTL ? (
+                <>کاوش در راهنماهای <span className="accent-green">{categoryFilter}</span></>
+              ) : (
+                <>Explore <span className="accent-green">{categoryFilter}</span> Guides</>
+              )}
             </>
           ) : (
             <>
-              Modernizing <span className="accent-green">JK Docs</span>
+              {t("site_title").split(' ')[0]} <span className="accent-green">{t("site_title").split(' ').slice(1).join(' ')}</span>
             </>
           )}
         </h1>
         <p className="text-muted mt-3 text-sm md:text-base max-w-2xl">
           {categoryFilter 
-            ? `Specialized technical documentation and workflows for ${categoryFilter}.`
-            : "Your personal technical knowledge base, unified and searchable."}
+            ? (isRTL ? `مستندات فنی تخصصی و جریان‌های کاری برای ${categoryFilter}.` : `Specialized technical documentation and workflows for ${categoryFilter}.`)
+            : t("site_tagline")}
         </p>
       </div>
 
@@ -91,7 +97,7 @@ function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
                 <div className="flex flex-wrap gap-2 mb-5">
                   {g.categories?.map((c) => (
                     <span key={c.id} className="inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-lime-500/10 dark:bg-lime-400/12 border border-lime-500/20 dark:border-lime-400/20 accent-green">
-                      {c.name}
+                      {isRTL && c.nameFa ? c.nameFa : c.name}
                     </span>
                   )) ?? (
                     <span className="inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-white/5 border border-white/10 text-muted">
@@ -143,12 +149,12 @@ function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
                 {loading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin accent-green" />
-                    <span>Loading more...</span>
+                    <span>...</span>
                   </>
                 ) : (
                   <>
                     <Plus className="w-5 h-5 accent-green" />
-                    <span>Load More Guides</span>
+                    <span>{t("load_more")}</span>
                   </>
                 )}
               </button>
@@ -158,11 +164,11 @@ function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
       ) : (
         <div className="text-center py-20 glass-panel rounded-3xl border border-white/5">
           <Search className="w-12 h-12 text-white/10 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-app">No guides found</h3>
+          <h3 className="text-xl font-bold text-app">{t("no_results")}</h3>
           <p className="text-muted mt-2">
             {categoryFilter
-              ? `We couldn't find any guides in the "${categoryFilter}" category.`
-              : "Start by adding your first technical guide to the knowledge base."}
+              ? t("try_other")
+              : t("try_other")}
           </p>
         </div>
       )}

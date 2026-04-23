@@ -5,19 +5,21 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Edit2, Trash2, FileText, ChevronRight, Hash, Layers } from "lucide-react";
 import { DynamicIcon } from "@/components/IconPicker";
+import { useLanguage } from "@/components/LanguageContext";
 
 export function AdminClientList({ categories }: { categories: any[] }) {
   const router = useRouter();
+  const { t, isRTL } = useLanguage();
 
   const handleDeleteGuide = async (id: number) => {
-    if (confirm("Are you sure you want to delete this guide?")) {
+    if (confirm(t("delete_guide") + "?")) {
       await deleteGuide(id);
       router.refresh();
     }
   };
 
   const handleDeleteCategory = async (id: number) => {
-    if (confirm("Delete this category? All guides in it will be orphaned or must be moved first. (Prisma might prevent this if relations exist)")) {
+    if (confirm(t("delete_category") + "?")) {
       try {
         await deleteCategory(id);
         router.refresh();
@@ -38,27 +40,27 @@ export function AdminClientList({ categories }: { categories: any[] }) {
                 <DynamicIcon name={cat.icon} className="w-6 h-6 accent-green" fallback={Layers} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-app">{cat.name}</h3>
+                <h3 className="text-xl font-bold text-app">{isRTL && cat.nameFa ? cat.nameFa : cat.name}</h3>
                 <p className="text-muted text-sm tracking-tight opacity-70">/{cat.slug}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <span className="text-xs font-bold text-muted bg-white/5 px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">
-                {cat.guides.length} Guides
+                {cat.guides.length} {t("total_guides").split(' ')[1]}
               </span>
               <div className="flex items-center gap-1">
                 <Link 
                   href={`/admin/category?id=${cat.id}`}
                   className="p-2 rounded-lg text-muted hover:text-app hover:bg-white/10 transition-all"
-                  title="Edit Category"
+                  title={t("edit_category")}
                 >
                   <Edit2 className="w-4 h-4" />
                 </Link>
                 <button 
                   onClick={() => handleDeleteCategory(cat.id)}
                   className="p-2 rounded-lg text-muted hover:text-red-400 hover:bg-red-400/10 transition-all"
-                  title="Delete Category"
+                  title={t("delete_category")}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -71,22 +73,22 @@ export function AdminClientList({ categories }: { categories: any[] }) {
             {cat.guides.length === 0 ? (
               <div className="text-center py-12 text-muted">
                 <FileText className="w-12 h-12 mx-auto mb-3 opacity-10" />
-                <p>No guides in this category yet.</p>
+                <p>{t("no_guides_category")}</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-separate border-spacing-y-2">
+                <table className="w-full text-start border-separate border-spacing-y-2">
                   <thead>
                     <tr className="text-[10px] font-bold text-muted uppercase tracking-[0.2em]">
-                      <th className="px-6 py-3">Title / Slug</th>
-                      <th className="px-6 py-3">Last Updated</th>
-                      <th className="px-6 py-3 text-right">Actions</th>
+                      <th className="px-6 py-3 text-start">{t("title_slug")}</th>
+                      <th className="px-6 py-3 text-start">{t("last_updated")}</th>
+                      <th className={`px-6 py-3 ${isRTL ? 'text-start' : 'text-end'}`}>{t("actions")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {cat.guides.map((guide: any) => (
                       <tr key={guide.id} className="group bg-white/2 hover:bg-white/5 transition-all transition-colors duration-300">
-                        <td className="px-6 py-4 rounded-l-2xl">
+                        <td className={`px-6 py-4 ${isRTL ? 'rounded-r-2xl' : 'rounded-l-2xl'}`}>
                           <div className="flex flex-col">
                             <span className="text-app font-bold group-hover:accent-green transition-colors">{guide.title}</span>
                             <span className="text-xs text-muted-more font-mono opacity-50">{guide.slug}</span>
@@ -95,28 +97,28 @@ export function AdminClientList({ categories }: { categories: any[] }) {
                         <td className="px-6 py-4 text-sm text-muted">
                           {new Date(guide.updatedAt).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 rounded-r-2xl text-right">
-                          <div className="flex items-center justify-end gap-2">
+                        <td className={`px-6 py-4 ${isRTL ? 'rounded-l-2xl' : 'rounded-r-2xl'} ${isRTL ? 'text-start' : 'text-end'}`}>
+                          <div className={`flex items-center ${isRTL ? 'justify-start' : 'justify-end'} gap-2`}>
                             <Link 
                               href={`/admin/editor?id=${guide.id}`} 
                               className="p-2 rounded-lg bg-white/5 border border-white/10 text-muted hover:text-app hover:bg-white/10 transition-all"
-                              title="Edit Guide"
+                              title={t("edit_guide")}
                             >
                               <Edit2 className="w-4 h-4" />
                             </Link>
                             <button 
                               onClick={() => handleDeleteGuide(guide.id)}
                               className="p-2 rounded-lg bg-white/5 border border-white/10 text-muted hover:text-red-400 hover:bg-red-400/10 transition-all"
-                              title="Delete Guide"
+                              title={t("delete_guide")}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
                             <Link 
                               href={`/guide/${guide.slug}`}
                               className="p-2 rounded-lg bg-white/5 border border-white/10 text-muted hover:text-app hover:bg-white/10 transition-all"
-                              title="View Guide"
+                              title={t("view_guide")}
                             >
-                              <ChevronRight className="w-4 h-4" />
+                              <ChevronRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                             </Link>
                           </div>
                         </td>

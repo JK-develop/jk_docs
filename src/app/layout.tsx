@@ -8,6 +8,10 @@ import { CommandPalette } from "@/components/CommandPalette";
 import { NewGuideFab } from "@/components/NewGuideFab";
 import { prisma } from "@/lib/prisma";
 
+import { LanguageProvider } from "@/components/LanguageContext";
+import { cookies } from "next/headers";
+import { Language } from "@/lib/i18n/translations";
+
 export const metadata: Metadata = {
   title: "JK Wiki",
   description: "Personal and comprehensive knowledge base",
@@ -18,28 +22,33 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const lang = (cookieStore.get("lang")?.value || "en") as Language;
+  const isRTL = lang === "fa";
+
   const categories = await prisma.category.findMany({
     include: { guides: true },
     orderBy: { id: "asc" },
   });
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={lang} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@100;400;700&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <Providers>
-          <div className="flex min-h-screen bg-app text-app">
-            {/* Sidebar component - handles its own responsiveness via context */}
-            <Suspense>
-              <Sidebar categories={categories} />
-            </Suspense>
-            
-            <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-              <Header categories={categories} />
+        <LanguageProvider initialLanguage={lang}>
+          <Providers>
+            <div className="flex min-h-screen bg-app text-app">
+              {/* Sidebar component - handles its own responsiveness via context */}
+              <Suspense>
+                <Sidebar categories={categories} />
+              </Suspense>
+              
+              <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+                <Header categories={categories} />
               
               <main className="flex-1 overflow-y-auto px-4 py-8 lg:px-8">
                 <div className="max-w-4xl mx-auto w-full">
@@ -51,8 +60,9 @@ export default async function RootLayout({
             <NewGuideFab />
           </div>
         </Providers>
-      </body>
-    </html>
+      </LanguageProvider>
+    </body>
+  </html>
   );
 }
 

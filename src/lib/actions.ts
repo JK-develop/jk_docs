@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function getCategories() {
-  const cats = await prisma.category.findMany({
+  return await prisma.category.findMany({
     include: {
       guides: {
         include: {
@@ -18,8 +18,6 @@ export async function getCategories() {
       id: "asc",
     },
   });
-  console.log(`DEBUG: getCategories returned ${cats.length} items`);
-  return cats;
 }
 
 export async function getGuideBySlug(slug: string) {
@@ -66,11 +64,12 @@ export async function searchGuides(query: string) {
 }
 
 // Admin Actions
-export async function createCategory(data: { slug: string; name: string; icon?: string }) {
+export async function createCategory(data: { slug: string; name: string; nameFa?: string; icon?: string }) {
   try {
     return await prisma.category.create({ 
       data: {
         name: data.name,
+        nameFa: data.nameFa,
         slug: data.slug,
         icon: data.icon || "Layers"
       } 
@@ -128,12 +127,13 @@ export async function deleteGuide(id: number) {
   revalidatePath("/");
   revalidatePath("/admin");
 }
-export async function updateCategory(id: number, data: { name: string; slug: string; icon?: string }) {
+export async function updateCategory(id: number, data: { name: string; nameFa?: string; slug: string; icon?: string }) {
   try {
     return await prisma.category.update({
       where: { id },
       data: {
         name: data.name,
+        nameFa: data.nameFa,
         slug: data.slug,
         icon: data.icon
       },

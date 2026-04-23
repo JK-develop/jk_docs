@@ -2,55 +2,27 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import React, { useState, useMemo, useEffect, Suspense } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useAppContext } from "./Providers";
-import { withDefaultCategories } from "@/lib/defaultCategories";
-import { loadLocalCategories, onCategoriesUpdated, type CategoryIconKey } from "@/lib/localCategories";
 import { 
   Search, 
   BookOpen, 
   Layout, 
-  Terminal, 
-  Cpu, 
   Plus,
-  Moon,
-  Sun,
-  Database,
-  Server,
-  Code2,
-  Globe,
   X,
   Lock,
-  Shield,
-  Wrench,
-  Palette,
   BookOpen as FallbackIcon
 } from "lucide-react";
 import { DynamicIcon } from "./IconPicker";
+import { useLanguage } from "./LanguageContext";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Sidebar({ categories = [] }: { categories?: any[] }) {
+  const { t, isRTL } = useLanguage();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get('category');
   const { isSidebarOpen, setIsSidebarOpen, toggleSidebar } = useAppContext();
-  const [localCategories, setLocalCategories] = useState<{ id: string; name: string; iconKey: CategoryIconKey }[]>([]);
-  
-  const allCategories = useMemo(() => {
-    const base = withDefaultCategories(categories);
-    const merged = [...base];
-    for (const c of localCategories) {
-      if (!merged.some((m: any) => (m?.name || "").toLowerCase() === c.name.toLowerCase())) {
-        merged.push({ id: c.id, name: c.name, guides: [], iconKey: c.iconKey });
-      }
-    }
-    return merged;
-  }, [categories, localCategories]);
-
-  useEffect(() => {
-    setLocalCategories(loadLocalCategories());
-    return onCategoriesUpdated(() => setLocalCategories(loadLocalCategories()));
-  }, []);
-
 
   return (
     <>
@@ -63,10 +35,10 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
       )}
 
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 glass-panel border-r border-white/10
+        fixed inset-y-0 ${isRTL ? 'right-0' : 'left-0'} z-50 w-64 glass-panel ${isRTL ? 'border-l' : 'border-r'} border-white/10
         transform transition-transform duration-300 ease-in-out
         lg:translate-x-0 lg:static lg:inset-0
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${isSidebarOpen ? 'translate-x-0' : (isRTL ? 'translate-x-full' : '-translate-x-full')}
       `}>
         <div className="flex flex-col h-full overflow-hidden">
           {/* Header / Logo */}
@@ -95,7 +67,7 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
                          hover:shadow-[0_0_22px_rgba(163,230,53,0.12)]"
             >
               <Plus className="w-5 h-5" />
-              <span>New Guide</span>
+              <span>{t("new_guide")}</span>
             </Link>
           </div>
 
@@ -109,7 +81,7 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
             >
               <div className="flex items-center gap-2">
                 <Search className="w-4 h-4 group-hover:accent-green transition-colors" />
-                <span>Search...</span>
+                <span>{t("search_placeholder").substring(0, 10)}...</span>
               </div>
               <div className="flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 glass-input rounded text-[10px] font-sans">⌘K</kbd>
@@ -117,12 +89,14 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
             </button>
           </div>
 
-          {/* Categories List */}
+          {/* Navigation & Categories */}
           <nav className="flex-1 overflow-y-auto px-4 pb-6 space-y-1.5 custom-scrollbar">
             <div className="mb-2 px-2 py-1">
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Categories</p>
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">{t("categories_label")}</p>
             </div>
-            {allCategories.map((category) => {
+            
+
+            {categories.map((category) => {
               const isActive = pathname === '/' && currentCategory === category.name;
               
               return (
@@ -142,21 +116,23 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
                     className={`w-4 h-4 transition-colors ${isActive ? 'accent-green' : 'group-hover:accent-green'}`} 
                     fallback={FallbackIcon}
                   />
-                  <span className="text-sm">{category.name}</span>
+                  <span className="text-sm">{isRTL && category.nameFa ? category.nameFa : category.name}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Admin Link at the bottom */}
-          <div className="p-4 border-t border-white/5 bg-white/2">
+          {/* Footer Area with Language Switcher */}
+          <div className="p-4 border-t border-white/5 bg-white/2 flex items-center justify-between gap-4">
+            <LanguageSwitcher />
+            
             <Link 
               href="/admin"
               onClick={() => setIsSidebarOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-more hover:text-app transition-colors group"
+              className="flex items-center gap-2 text-muted-more hover:text-app transition-colors group"
             >
-              <Lock className="w-4 h-4 group-hover:accent-green transition-colors" />
-              <span className="text-xs font-semibold">Admin Panel</span>
+              <Lock className="w-3.5 h-3.5 group-hover:accent-green transition-colors" />
+              <span className="text-[10px] font-bold uppercase tracking-tight">{t("admin_panel")}</span>
             </Link>
           </div>
         </div>
