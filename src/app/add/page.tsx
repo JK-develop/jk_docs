@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function AddKnowledgePage() {
   const categories = withDefaultCategories(await getCategories());
-  const t = await getServerTranslation();
+  const { t } = await getServerTranslation();
   const cookieStore = await cookies();
   const isRTL = cookieStore.get("lang")?.value === "fa";
 
