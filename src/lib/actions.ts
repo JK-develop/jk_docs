@@ -65,6 +65,7 @@ export async function searchGuides(query: string) {
 
 // Admin Actions
 export async function createCategory(data: { slug: string; name: string; icon?: string }) {
+  console.log("DEBUG: prisma.category keys:", Object.keys(prisma.category));
   try {
     return await prisma.category.create({ 
       data: {

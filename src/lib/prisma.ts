@@ -3,8 +3,6 @@ import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 
 const adapter = new PrismaBetterSqlite3({ url: 'file:./prisma/dev.db' });
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
-
-export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter });
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// We explicitly create a new client to ensure it picks up the latest schema changes
+// particularly after the many-to-many and icon additions.
+export const prisma = new PrismaClient({ adapter });
