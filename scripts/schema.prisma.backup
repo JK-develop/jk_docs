@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Category {
+  id     Int     @id @default(autoincrement())
+  slug   String  @unique
+  name   String
+  guides Guide[]
+}
+
+model Guide {
+  id         Int        @id @default(autoincrement())
+  slug       String     @unique
+  categories Category[]
+  title      String
+  content    String
+  tags       String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
