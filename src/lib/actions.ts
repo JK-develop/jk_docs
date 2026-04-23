@@ -65,9 +65,18 @@ export async function searchGuides(query: string) {
 
 // Admin Actions
 export async function createCategory(data: { slug: string; name: string; icon?: string }) {
-  await prisma.category.create({ data });
-  revalidatePath("/");
-  revalidatePath("/admin");
+  try {
+    return await prisma.category.create({ 
+      data: {
+        name: data.name,
+        slug: data.slug,
+        icon: data.icon || "Layers"
+      } 
+    });
+  } finally {
+    revalidatePath("/");
+    revalidatePath("/admin");
+  }
 }
 
 export async function createGuide(data: {
@@ -118,12 +127,19 @@ export async function deleteGuide(id: number) {
   revalidatePath("/admin");
 }
 export async function updateCategory(id: number, data: { name: string; slug: string; icon?: string }) {
-  await prisma.category.update({
-    where: { id },
-    data,
-  });
-  revalidatePath("/");
-  revalidatePath("/admin");
+  try {
+    return await prisma.category.update({
+      where: { id },
+      data: {
+        name: data.name,
+        slug: data.slug,
+        icon: data.icon
+      },
+    });
+  } finally {
+    revalidatePath("/");
+    revalidatePath("/admin");
+  }
 }
 
 export async function deleteCategory(id: number) {
