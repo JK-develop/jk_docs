@@ -7,10 +7,12 @@ import { Sidebar } from "@/components/Sidebar";
 import { CommandPalette } from "@/components/CommandPalette";
 import { NewGuideFab } from "@/components/NewGuideFab";
 import { prisma } from "@/lib/prisma";
-
 import { LanguageProvider } from "@/components/LanguageContext";
+import { getServerTranslation } from "@/lib/i18n/server";
 import { cookies } from "next/headers";
 import { Language } from "@/lib/i18n/translations";
+
+console.log("🚀 RUNNING VERSION: 1.1.0-bilingual-unified");
 
 export const metadata: Metadata = {
   title: "JK Wiki",
@@ -65,4 +67,3 @@ export default async function RootLayout({
   </html>
   );
 }
-
