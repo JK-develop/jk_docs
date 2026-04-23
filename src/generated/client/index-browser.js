@@ -126,7 +126,6 @@ exports.Prisma.CategoryScalarFieldEnum = {
 exports.Prisma.GuideScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
-  categoryId: 'categoryId',
   title: 'title',
   content: 'content',
   tags: 'tags',

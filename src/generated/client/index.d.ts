@@ -394,7 +394,7 @@ export namespace Prisma {
   ? False
   : T extends Uint8Array
   ? False
-  : T extends bigint
+  : T extends BigInt
   ? False
   : T extends object
   ? True
@@ -980,6 +980,37 @@ export namespace Prisma {
    */
   export type CategoryCountOutputTypeCountGuidesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GuideWhereInput
+  }
+
+
+  /**
+   * Count Type GuideCountOutputType
+   */
+
+  export type GuideCountOutputType = {
+    categories: number
+  }
+
+  export type GuideCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categories?: boolean | GuideCountOutputTypeCountCategoriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GuideCountOutputType without action
+   */
+  export type GuideCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GuideCountOutputType
+     */
+    select?: GuideCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GuideCountOutputType without action
+   */
+  export type GuideCountOutputTypeCountCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoryWhereInput
   }
 
 
@@ -2082,18 +2113,15 @@ export namespace Prisma {
 
   export type GuideAvgAggregateOutputType = {
     id: number | null
-    categoryId: number | null
   }
 
   export type GuideSumAggregateOutputType = {
     id: number | null
-    categoryId: number | null
   }
 
   export type GuideMinAggregateOutputType = {
     id: number | null
     slug: string | null
-    categoryId: number | null
     title: string | null
     content: string | null
     tags: string | null
@@ -2104,7 +2132,6 @@ export namespace Prisma {
   export type GuideMaxAggregateOutputType = {
     id: number | null
     slug: string | null
-    categoryId: number | null
     title: string | null
     content: string | null
     tags: string | null
@@ -2115,7 +2142,6 @@ export namespace Prisma {
   export type GuideCountAggregateOutputType = {
     id: number
     slug: number
-    categoryId: number
     title: number
     content: number
     tags: number
@@ -2127,18 +2153,15 @@ export namespace Prisma {
 
   export type GuideAvgAggregateInputType = {
     id?: true
-    categoryId?: true
   }
 
   export type GuideSumAggregateInputType = {
     id?: true
-    categoryId?: true
   }
 
   export type GuideMinAggregateInputType = {
     id?: true
     slug?: true
-    categoryId?: true
     title?: true
     content?: true
     tags?: true
@@ -2149,7 +2172,6 @@ export namespace Prisma {
   export type GuideMaxAggregateInputType = {
     id?: true
     slug?: true
-    categoryId?: true
     title?: true
     content?: true
     tags?: true
@@ -2160,7 +2182,6 @@ export namespace Prisma {
   export type GuideCountAggregateInputType = {
     id?: true
     slug?: true
-    categoryId?: true
     title?: true
     content?: true
     tags?: true
@@ -2258,7 +2279,6 @@ export namespace Prisma {
   export type GuideGroupByOutputType = {
     id: number
     slug: string
-    categoryId: number
     title: string
     content: string
     tags: string | null
@@ -2288,43 +2308,38 @@ export namespace Prisma {
   export type GuideSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    categoryId?: boolean
     title?: boolean
     content?: boolean
     tags?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    categories?: boolean | Guide$categoriesArgs<ExtArgs>
+    _count?: boolean | GuideCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["guide"]>
 
   export type GuideSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    categoryId?: boolean
     title?: boolean
     content?: boolean
     tags?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["guide"]>
 
   export type GuideSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    categoryId?: boolean
     title?: boolean
     content?: boolean
     tags?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["guide"]>
 
   export type GuideSelectScalar = {
     id?: boolean
     slug?: boolean
-    categoryId?: boolean
     title?: boolean
     content?: boolean
     tags?: boolean
@@ -2332,26 +2347,22 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type GuideOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "categoryId" | "title" | "content" | "tags" | "createdAt" | "updatedAt", ExtArgs["result"]["guide"]>
+  export type GuideOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "content" | "tags" | "createdAt" | "updatedAt", ExtArgs["result"]["guide"]>
   export type GuideInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    categories?: boolean | Guide$categoriesArgs<ExtArgs>
+    _count?: boolean | GuideCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type GuideIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
-  }
-  export type GuideIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
-  }
+  export type GuideIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type GuideIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $GuidePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Guide"
     objects: {
-      category: Prisma.$CategoryPayload<ExtArgs>
+      categories: Prisma.$CategoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       slug: string
-      categoryId: number
       title: string
       content: string
       tags: string | null
@@ -2751,7 +2762,7 @@ export namespace Prisma {
    */
   export interface Prisma__GuideClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    categories<T extends Guide$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, Guide$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2783,7 +2794,6 @@ export namespace Prisma {
   interface GuideFieldRefs {
     readonly id: FieldRef<"Guide", 'Int'>
     readonly slug: FieldRef<"Guide", 'String'>
-    readonly categoryId: FieldRef<"Guide", 'Int'>
     readonly title: FieldRef<"Guide", 'String'>
     readonly content: FieldRef<"Guide", 'String'>
     readonly tags: FieldRef<"Guide", 'String'>
@@ -3041,10 +3051,6 @@ export namespace Prisma {
      * The data used to create many Guides.
      */
     data: GuideCreateManyInput | GuideCreateManyInput[]
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GuideIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3115,10 +3121,6 @@ export namespace Prisma {
      * Limit how many Guides to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GuideIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3188,6 +3190,30 @@ export namespace Prisma {
   }
 
   /**
+   * Guide.categories
+   */
+  export type Guide$categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    cursor?: CategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+  }
+
+  /**
    * Guide without action
    */
   export type GuideDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3229,7 +3255,6 @@ export namespace Prisma {
   export const GuideScalarFieldEnum: {
     id: 'id',
     slug: 'slug',
-    categoryId: 'categoryId',
     title: 'title',
     content: 'content',
     tags: 'tags',
@@ -3345,25 +3370,23 @@ export namespace Prisma {
     NOT?: GuideWhereInput | GuideWhereInput[]
     id?: IntFilter<"Guide"> | number
     slug?: StringFilter<"Guide"> | string
-    categoryId?: IntFilter<"Guide"> | number
     title?: StringFilter<"Guide"> | string
     content?: StringFilter<"Guide"> | string
     tags?: StringNullableFilter<"Guide"> | string | null
     createdAt?: DateTimeFilter<"Guide"> | Date | string
     updatedAt?: DateTimeFilter<"Guide"> | Date | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    categories?: CategoryListRelationFilter
   }
 
   export type GuideOrderByWithRelationInput = {
     id?: SortOrder
     slug?: SortOrder
-    categoryId?: SortOrder
     title?: SortOrder
     content?: SortOrder
     tags?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    category?: CategoryOrderByWithRelationInput
+    categories?: CategoryOrderByRelationAggregateInput
   }
 
   export type GuideWhereUniqueInput = Prisma.AtLeast<{
@@ -3372,19 +3395,17 @@ export namespace Prisma {
     AND?: GuideWhereInput | GuideWhereInput[]
     OR?: GuideWhereInput[]
     NOT?: GuideWhereInput | GuideWhereInput[]
-    categoryId?: IntFilter<"Guide"> | number
     title?: StringFilter<"Guide"> | string
     content?: StringFilter<"Guide"> | string
     tags?: StringNullableFilter<"Guide"> | string | null
     createdAt?: DateTimeFilter<"Guide"> | Date | string
     updatedAt?: DateTimeFilter<"Guide"> | Date | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    categories?: CategoryListRelationFilter
   }, "id" | "slug">
 
   export type GuideOrderByWithAggregationInput = {
     id?: SortOrder
     slug?: SortOrder
-    categoryId?: SortOrder
     title?: SortOrder
     content?: SortOrder
     tags?: SortOrderInput | SortOrder
@@ -3403,7 +3424,6 @@ export namespace Prisma {
     NOT?: GuideScalarWhereWithAggregatesInput | GuideScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Guide"> | number
     slug?: StringWithAggregatesFilter<"Guide"> | string
-    categoryId?: IntWithAggregatesFilter<"Guide"> | number
     title?: StringWithAggregatesFilter<"Guide"> | string
     content?: StringWithAggregatesFilter<"Guide"> | string
     tags?: StringNullableWithAggregatesFilter<"Guide"> | string | null
@@ -3414,27 +3434,27 @@ export namespace Prisma {
   export type CategoryCreateInput = {
     slug: string
     name: string
-    guides?: GuideCreateNestedManyWithoutCategoryInput
+    guides?: GuideCreateNestedManyWithoutCategoriesInput
   }
 
   export type CategoryUncheckedCreateInput = {
     id?: number
     slug: string
     name: string
-    guides?: GuideUncheckedCreateNestedManyWithoutCategoryInput
+    guides?: GuideUncheckedCreateNestedManyWithoutCategoriesInput
   }
 
   export type CategoryUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    guides?: GuideUpdateManyWithoutCategoryNestedInput
+    guides?: GuideUpdateManyWithoutCategoriesNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    guides?: GuideUncheckedUpdateManyWithoutCategoryNestedInput
+    guides?: GuideUncheckedUpdateManyWithoutCategoriesNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -3461,18 +3481,18 @@ export namespace Prisma {
     tags?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutGuidesInput
+    categories?: CategoryCreateNestedManyWithoutGuidesInput
   }
 
   export type GuideUncheckedCreateInput = {
     id?: number
     slug: string
-    categoryId: number
     title: string
     content: string
     tags?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    categories?: CategoryUncheckedCreateNestedManyWithoutGuidesInput
   }
 
   export type GuideUpdateInput = {
@@ -3482,24 +3502,23 @@ export namespace Prisma {
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutGuidesNestedInput
+    categories?: CategoryUpdateManyWithoutGuidesNestedInput
   }
 
   export type GuideUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
-    categoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categories?: CategoryUncheckedUpdateManyWithoutGuidesNestedInput
   }
 
   export type GuideCreateManyInput = {
     id?: number
     slug: string
-    categoryId: number
     title: string
     content: string
     tags?: string | null
@@ -3519,7 +3538,6 @@ export namespace Prisma {
   export type GuideUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
-    categoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     tags?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3646,9 +3664,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type CategoryScalarRelationFilter = {
-    is?: CategoryWhereInput
-    isNot?: CategoryWhereInput
+  export type CategoryListRelationFilter = {
+    every?: CategoryWhereInput
+    some?: CategoryWhereInput
+    none?: CategoryWhereInput
   }
 
   export type SortOrderInput = {
@@ -3656,10 +3675,13 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
+  export type CategoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type GuideCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
-    categoryId?: SortOrder
     title?: SortOrder
     content?: SortOrder
     tags?: SortOrder
@@ -3669,13 +3691,11 @@ export namespace Prisma {
 
   export type GuideAvgOrderByAggregateInput = {
     id?: SortOrder
-    categoryId?: SortOrder
   }
 
   export type GuideMaxOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
-    categoryId?: SortOrder
     title?: SortOrder
     content?: SortOrder
     tags?: SortOrder
@@ -3686,7 +3706,6 @@ export namespace Prisma {
   export type GuideMinOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
-    categoryId?: SortOrder
     title?: SortOrder
     content?: SortOrder
     tags?: SortOrder
@@ -3696,7 +3715,6 @@ export namespace Prisma {
 
   export type GuideSumOrderByAggregateInput = {
     id?: SortOrder
-    categoryId?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -3730,17 +3748,15 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type GuideCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<GuideCreateWithoutCategoryInput, GuideUncheckedCreateWithoutCategoryInput> | GuideCreateWithoutCategoryInput[] | GuideUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: GuideCreateOrConnectWithoutCategoryInput | GuideCreateOrConnectWithoutCategoryInput[]
-    createMany?: GuideCreateManyCategoryInputEnvelope
+  export type GuideCreateNestedManyWithoutCategoriesInput = {
+    create?: XOR<GuideCreateWithoutCategoriesInput, GuideUncheckedCreateWithoutCategoriesInput> | GuideCreateWithoutCategoriesInput[] | GuideUncheckedCreateWithoutCategoriesInput[]
+    connectOrCreate?: GuideCreateOrConnectWithoutCategoriesInput | GuideCreateOrConnectWithoutCategoriesInput[]
     connect?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
   }
 
-  export type GuideUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<GuideCreateWithoutCategoryInput, GuideUncheckedCreateWithoutCategoryInput> | GuideCreateWithoutCategoryInput[] | GuideUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: GuideCreateOrConnectWithoutCategoryInput | GuideCreateOrConnectWithoutCategoryInput[]
-    createMany?: GuideCreateManyCategoryInputEnvelope
+  export type GuideUncheckedCreateNestedManyWithoutCategoriesInput = {
+    create?: XOR<GuideCreateWithoutCategoriesInput, GuideUncheckedCreateWithoutCategoriesInput> | GuideCreateWithoutCategoriesInput[] | GuideUncheckedCreateWithoutCategoriesInput[]
+    connectOrCreate?: GuideCreateOrConnectWithoutCategoriesInput | GuideCreateOrConnectWithoutCategoriesInput[]
     connect?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
   }
 
@@ -3748,17 +3764,16 @@ export namespace Prisma {
     set?: string
   }
 
-  export type GuideUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<GuideCreateWithoutCategoryInput, GuideUncheckedCreateWithoutCategoryInput> | GuideCreateWithoutCategoryInput[] | GuideUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: GuideCreateOrConnectWithoutCategoryInput | GuideCreateOrConnectWithoutCategoryInput[]
-    upsert?: GuideUpsertWithWhereUniqueWithoutCategoryInput | GuideUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: GuideCreateManyCategoryInputEnvelope
+  export type GuideUpdateManyWithoutCategoriesNestedInput = {
+    create?: XOR<GuideCreateWithoutCategoriesInput, GuideUncheckedCreateWithoutCategoriesInput> | GuideCreateWithoutCategoriesInput[] | GuideUncheckedCreateWithoutCategoriesInput[]
+    connectOrCreate?: GuideCreateOrConnectWithoutCategoriesInput | GuideCreateOrConnectWithoutCategoriesInput[]
+    upsert?: GuideUpsertWithWhereUniqueWithoutCategoriesInput | GuideUpsertWithWhereUniqueWithoutCategoriesInput[]
     set?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
     disconnect?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
     delete?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
     connect?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
-    update?: GuideUpdateWithWhereUniqueWithoutCategoryInput | GuideUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: GuideUpdateManyWithWhereWithoutCategoryInput | GuideUpdateManyWithWhereWithoutCategoryInput[]
+    update?: GuideUpdateWithWhereUniqueWithoutCategoriesInput | GuideUpdateWithWhereUniqueWithoutCategoriesInput[]
+    updateMany?: GuideUpdateManyWithWhereWithoutCategoriesInput | GuideUpdateManyWithWhereWithoutCategoriesInput[]
     deleteMany?: GuideScalarWhereInput | GuideScalarWhereInput[]
   }
 
@@ -3770,24 +3785,29 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type GuideUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<GuideCreateWithoutCategoryInput, GuideUncheckedCreateWithoutCategoryInput> | GuideCreateWithoutCategoryInput[] | GuideUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: GuideCreateOrConnectWithoutCategoryInput | GuideCreateOrConnectWithoutCategoryInput[]
-    upsert?: GuideUpsertWithWhereUniqueWithoutCategoryInput | GuideUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: GuideCreateManyCategoryInputEnvelope
+  export type GuideUncheckedUpdateManyWithoutCategoriesNestedInput = {
+    create?: XOR<GuideCreateWithoutCategoriesInput, GuideUncheckedCreateWithoutCategoriesInput> | GuideCreateWithoutCategoriesInput[] | GuideUncheckedCreateWithoutCategoriesInput[]
+    connectOrCreate?: GuideCreateOrConnectWithoutCategoriesInput | GuideCreateOrConnectWithoutCategoriesInput[]
+    upsert?: GuideUpsertWithWhereUniqueWithoutCategoriesInput | GuideUpsertWithWhereUniqueWithoutCategoriesInput[]
     set?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
     disconnect?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
     delete?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
     connect?: GuideWhereUniqueInput | GuideWhereUniqueInput[]
-    update?: GuideUpdateWithWhereUniqueWithoutCategoryInput | GuideUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: GuideUpdateManyWithWhereWithoutCategoryInput | GuideUpdateManyWithWhereWithoutCategoryInput[]
+    update?: GuideUpdateWithWhereUniqueWithoutCategoriesInput | GuideUpdateWithWhereUniqueWithoutCategoriesInput[]
+    updateMany?: GuideUpdateManyWithWhereWithoutCategoriesInput | GuideUpdateManyWithWhereWithoutCategoriesInput[]
     deleteMany?: GuideScalarWhereInput | GuideScalarWhereInput[]
   }
 
-  export type CategoryCreateNestedOneWithoutGuidesInput = {
-    create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput
-    connect?: CategoryWhereUniqueInput
+  export type CategoryCreateNestedManyWithoutGuidesInput = {
+    create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput> | CategoryCreateWithoutGuidesInput[] | CategoryUncheckedCreateWithoutGuidesInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput | CategoryCreateOrConnectWithoutGuidesInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+  }
+
+  export type CategoryUncheckedCreateNestedManyWithoutGuidesInput = {
+    create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput> | CategoryCreateWithoutGuidesInput[] | CategoryUncheckedCreateWithoutGuidesInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput | CategoryCreateOrConnectWithoutGuidesInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -3798,12 +3818,30 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type CategoryUpdateOneRequiredWithoutGuidesNestedInput = {
-    create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput
-    upsert?: CategoryUpsertWithoutGuidesInput
-    connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutGuidesInput, CategoryUpdateWithoutGuidesInput>, CategoryUncheckedUpdateWithoutGuidesInput>
+  export type CategoryUpdateManyWithoutGuidesNestedInput = {
+    create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput> | CategoryCreateWithoutGuidesInput[] | CategoryUncheckedCreateWithoutGuidesInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput | CategoryCreateOrConnectWithoutGuidesInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutGuidesInput | CategoryUpsertWithWhereUniqueWithoutGuidesInput[]
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutGuidesInput | CategoryUpdateWithWhereUniqueWithoutGuidesInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutGuidesInput | CategoryUpdateManyWithWhereWithoutGuidesInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+  }
+
+  export type CategoryUncheckedUpdateManyWithoutGuidesNestedInput = {
+    create?: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput> | CategoryCreateWithoutGuidesInput[] | CategoryUncheckedCreateWithoutGuidesInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutGuidesInput | CategoryCreateOrConnectWithoutGuidesInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutGuidesInput | CategoryUpsertWithWhereUniqueWithoutGuidesInput[]
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutGuidesInput | CategoryUpdateWithWhereUniqueWithoutGuidesInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutGuidesInput | CategoryUpdateManyWithWhereWithoutGuidesInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3942,7 +3980,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type GuideCreateWithoutCategoryInput = {
+  export type GuideCreateWithoutCategoriesInput = {
     slug: string
     title: string
     content: string
@@ -3951,7 +3989,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type GuideUncheckedCreateWithoutCategoryInput = {
+  export type GuideUncheckedCreateWithoutCategoriesInput = {
     id?: number
     slug: string
     title: string
@@ -3961,29 +3999,25 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type GuideCreateOrConnectWithoutCategoryInput = {
+  export type GuideCreateOrConnectWithoutCategoriesInput = {
     where: GuideWhereUniqueInput
-    create: XOR<GuideCreateWithoutCategoryInput, GuideUncheckedCreateWithoutCategoryInput>
+    create: XOR<GuideCreateWithoutCategoriesInput, GuideUncheckedCreateWithoutCategoriesInput>
   }
 
-  export type GuideCreateManyCategoryInputEnvelope = {
-    data: GuideCreateManyCategoryInput | GuideCreateManyCategoryInput[]
-  }
-
-  export type GuideUpsertWithWhereUniqueWithoutCategoryInput = {
+  export type GuideUpsertWithWhereUniqueWithoutCategoriesInput = {
     where: GuideWhereUniqueInput
-    update: XOR<GuideUpdateWithoutCategoryInput, GuideUncheckedUpdateWithoutCategoryInput>
-    create: XOR<GuideCreateWithoutCategoryInput, GuideUncheckedCreateWithoutCategoryInput>
+    update: XOR<GuideUpdateWithoutCategoriesInput, GuideUncheckedUpdateWithoutCategoriesInput>
+    create: XOR<GuideCreateWithoutCategoriesInput, GuideUncheckedCreateWithoutCategoriesInput>
   }
 
-  export type GuideUpdateWithWhereUniqueWithoutCategoryInput = {
+  export type GuideUpdateWithWhereUniqueWithoutCategoriesInput = {
     where: GuideWhereUniqueInput
-    data: XOR<GuideUpdateWithoutCategoryInput, GuideUncheckedUpdateWithoutCategoryInput>
+    data: XOR<GuideUpdateWithoutCategoriesInput, GuideUncheckedUpdateWithoutCategoriesInput>
   }
 
-  export type GuideUpdateManyWithWhereWithoutCategoryInput = {
+  export type GuideUpdateManyWithWhereWithoutCategoriesInput = {
     where: GuideScalarWhereInput
-    data: XOR<GuideUpdateManyMutationInput, GuideUncheckedUpdateManyWithoutCategoryInput>
+    data: XOR<GuideUpdateManyMutationInput, GuideUncheckedUpdateManyWithoutCategoriesInput>
   }
 
   export type GuideScalarWhereInput = {
@@ -3992,7 +4026,6 @@ export namespace Prisma {
     NOT?: GuideScalarWhereInput | GuideScalarWhereInput[]
     id?: IntFilter<"Guide"> | number
     slug?: StringFilter<"Guide"> | string
-    categoryId?: IntFilter<"Guide"> | number
     title?: StringFilter<"Guide"> | string
     content?: StringFilter<"Guide"> | string
     tags?: StringNullableFilter<"Guide"> | string | null
@@ -4016,15 +4049,58 @@ export namespace Prisma {
     create: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput>
   }
 
-  export type CategoryUpsertWithoutGuidesInput = {
+  export type CategoryUpsertWithWhereUniqueWithoutGuidesInput = {
+    where: CategoryWhereUniqueInput
     update: XOR<CategoryUpdateWithoutGuidesInput, CategoryUncheckedUpdateWithoutGuidesInput>
     create: XOR<CategoryCreateWithoutGuidesInput, CategoryUncheckedCreateWithoutGuidesInput>
-    where?: CategoryWhereInput
   }
 
-  export type CategoryUpdateToOneWithWhereWithoutGuidesInput = {
-    where?: CategoryWhereInput
+  export type CategoryUpdateWithWhereUniqueWithoutGuidesInput = {
+    where: CategoryWhereUniqueInput
     data: XOR<CategoryUpdateWithoutGuidesInput, CategoryUncheckedUpdateWithoutGuidesInput>
+  }
+
+  export type CategoryUpdateManyWithWhereWithoutGuidesInput = {
+    where: CategoryScalarWhereInput
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutGuidesInput>
+  }
+
+  export type CategoryScalarWhereInput = {
+    AND?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    OR?: CategoryScalarWhereInput[]
+    NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    id?: IntFilter<"Category"> | number
+    slug?: StringFilter<"Category"> | string
+    name?: StringFilter<"Category"> | string
+  }
+
+  export type GuideUpdateWithoutCategoriesInput = {
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GuideUncheckedUpdateWithoutCategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GuideUncheckedUpdateManyWithoutCategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CategoryUpdateWithoutGuidesInput = {
@@ -4038,43 +4114,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
-  export type GuideCreateManyCategoryInput = {
-    id?: number
-    slug: string
-    title: string
-    content: string
-    tags?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type GuideUpdateWithoutCategoryInput = {
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    tags?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type GuideUncheckedUpdateWithoutCategoryInput = {
+  export type CategoryUncheckedUpdateManyWithoutGuidesInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    tags?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type GuideUncheckedUpdateManyWithoutCategoryInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    slug?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    tags?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
   }
 
 

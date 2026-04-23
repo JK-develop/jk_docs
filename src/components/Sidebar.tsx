@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useState, useMemo, useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { useAppContext } from "./Providers";
 import { withDefaultCategories } from "@/lib/defaultCategories";
 import { loadLocalCategories, onCategoriesUpdated, type CategoryIconKey } from "@/lib/localCategories";
 import { 
-  ChevronDown, 
-  ChevronRight, 
   Search, 
   BookOpen, 
   Layout, 
@@ -22,6 +20,7 @@ import {
   Code2,
   Globe,
   X,
+  Lock,
   Shield,
   Wrench,
   Palette
@@ -29,6 +28,8 @@ import {
 
 export function Sidebar({ categories = [] }: { categories?: any[] }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentCategory = searchParams.get('category');
   const { isSidebarOpen, setIsSidebarOpen, toggleSidebar } = useAppContext();
   const [localCategories, setLocalCategories] = useState<{ id: string; name: string; iconKey: CategoryIconKey }[]>([]);
   
@@ -47,21 +48,6 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
     setLocalCategories(loadLocalCategories());
     return onCategoriesUpdated(() => setLocalCategories(loadLocalCategories()));
   }, []);
-
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
-
-  // Initialize all to expanded
-  useEffect(() => {
-    const initial: Record<string, boolean> = {};
-    allCategories.forEach(cat => {
-      initial[cat.id] = true;
-    });
-    setExpandedCategories(initial);
-  }, [allCategories]);
-
-  const toggleCategory = (id: string) => {
-    setExpandedCategories(prev => ({ ...prev, [id]: !prev[id] }));
-  };
 
   const getIcon = (name: string, iconKey?: CategoryIconKey) => {
     if (iconKey === "database") return Database;
@@ -146,60 +132,45 @@ export function Sidebar({ categories = [] }: { categories?: any[] }) {
             </button>
           </div>
 
-          {/* Navigation Tree */}
-          <nav className="flex-1 overflow-y-auto px-2 pb-6 custom-scrollbar">
+          {/* Categories List */}
+          <nav className="flex-1 overflow-y-auto px-4 pb-6 space-y-1.5 custom-scrollbar">
+            <div className="mb-2 px-2 py-1">
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Categories</p>
+            </div>
             {allCategories.map((category) => {
               const Icon = getIcon(category.name, (category as any).iconKey);
-              const isExpanded = expandedCategories[category.id] !== false;
+              const isActive = pathname === '/' && currentCategory === category.name;
               
               return (
-                <div key={category.id} className="mb-1">
-                  <div className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted hover:text-app transition-colors group text-left">
-                    <Link 
-                      href={`/?category=${encodeURIComponent(category.name)}`}
-                      onClick={() => setIsSidebarOpen(false)}
-                      className="flex items-center gap-2 flex-grow"
-                    >
-                      <Icon className="w-4 h-4 text-muted group-hover:accent-green transition-colors" />
-                      <span>{category.name}</span>
-                    </Link>
-                    <button 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleCategory(category.id);
-                      }} 
-                      className="p-1 px-2 -mr-2"
-                    >
-                      {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
-                    </button>
-                  </div>
-
-                  <div className={`mt-1 ml-4 border-l border-white/10 space-y-1 overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                    {category.guides?.map((guide: any) => {
-                      const href = guide.slug.startsWith('/') ? guide.slug : `/guide/${guide.slug}`;
-                      const isActive = pathname === href;
-                      
-                      return (
-                        <Link 
-                          key={guide.id}
-                          href={href}
-                          onClick={() => setIsSidebarOpen(false)}
-                          className={`
-                            block px-4 py-1.5 text-sm rounded-r-md transition-all
-                            ${isActive 
-                              ? 'accent-green bg-lime-500/5 dark:bg-lime-400/10 border-l-2 border-[color:var(--accent-green)] font-semibold' 
-                              : 'text-muted hover:text-app hover:bg-black/5 dark:hover:bg-white/5'}
-                          `}
-                        >
-                          {guide.title}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
+                <Link 
+                  key={category.id}
+                  href={`/?category=${encodeURIComponent(category.name)}`}
+                  onClick={() => setIsSidebarOpen(false)}
+                  className={`
+                    flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group
+                    ${isActive 
+                      ? 'bg-lime-500/10 dark:bg-lime-400/15 text-app border border-lime-500/20 dark:border-lime-400/30 font-semibold shadow-[0_0_15px_rgba(163,230,53,0.08)]' 
+                      : 'text-muted hover:text-app hover:bg-white/5 border border-transparent'}
+                  `}
+                >
+                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'accent-green' : 'group-hover:accent-green'}`} />
+                  <span className="text-sm">{category.name}</span>
+                </Link>
               );
             })}
           </nav>
+
+          {/* Admin Link at the bottom */}
+          <div className="p-4 border-t border-white/5 bg-white/2">
+            <Link 
+              href="/admin"
+              onClick={() => setIsSidebarOpen(false)}
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-muted-more hover:text-app transition-colors group"
+            >
+              <Lock className="w-4 h-4 group-hover:accent-green transition-colors" />
+              <span className="text-xs font-semibold">Admin Panel</span>
+            </Link>
+          </div>
         </div>
       </aside>
     </>

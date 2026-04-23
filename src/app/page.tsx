@@ -12,8 +12,8 @@ export default async function Page({
 
   // Fetch initial guides from the database, newest first
   const guides = await prisma.guide.findMany({
-    where: category ? { category: { name: category } } : {},
-    include: { category: true },
+    where: category ? { categories: { some: { name: category } } } : {},
+    include: { categories: true },
     orderBy: { createdAt: "desc" },
     take: 9, // Initial load limit
   });

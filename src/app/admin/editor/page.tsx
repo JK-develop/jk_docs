@@ -14,6 +14,7 @@ export default async function EditorPage({
   if (resolvedParams.id) {
     guide = await prisma.guide.findUnique({
       where: { id: parseInt(resolvedParams.id) },
+      include: { categories: true },
     });
   }
 

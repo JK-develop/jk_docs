@@ -6,12 +6,13 @@ A premium, high-performance personal knowledge base and developer documentation 
 
 ## ✨ Features
 
-- **🚀 Ultra-Fast Navigation**: Built with Next.js 16 and Turbopack for near-instant page transitions.
+- **🚀 Ultra-Fast Navigation**: Built with Next.js 15 and Turbopack for near-instant page transitions.
+- **🛡️ Secure Admin Panel**: Password-protected dashboard for full content management (Admin Panel link in sidebar).
 - **🔍 Command Palette**: Powerful `Cmd+K` search interface to find any guide or category instantly.
-- **📝 Markdown Editor**: Full-featured admin editor with live preview for creating and editing guides.
+- **📝 Markdown Editor**: Premium admin editor with live preview, tags, and multi-category support.
 - **💎 Premium UI/UX**: Modern dark-themed design with glassmorphism, smooth animations, and responsive layout.
-- **🗂️ Categorized Knowledge**: Organized hierarchy for DevOps, Backend, Frontend, and Toolset guides.
-- **🤖 AI-Powered Content**: Pre-seeded with professional-grade guides for modern infrastructure setup (Coolify, Hetzner, Docker, etc.).
+- **🗂️ Multi-Category Support**: Guides can now belong to multiple categories (e.g., DevOps + Backend).
+- **🤖 AI-Powered Content**: Pre-seeded with professional-grade guides for modern infrastructure setup.
 
 ## 🛠️ Tech Stack
 
@@ -39,6 +40,9 @@ npm install
 ```bash
 # Push schema to local SQLite database
 npx prisma db push
+
+# Set your admin password in .env
+# ADMIN_PASSWORD=your_secure_password
 
 # Seed the database with initial guides
 npx tsx prisma/seed.ts

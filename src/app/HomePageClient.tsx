@@ -12,10 +12,9 @@ type Guide = {
   title: string;
   content: string;
   tags?: string | null;
-  categoryId: number;
   createdAt: any;
   updatedAt: any;
-  category: { id: number; slug: string; name: string };
+  categories: { id: number; slug: string; name: string }[];
 };
 
 function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
@@ -36,8 +35,8 @@ function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
     setLoading(true);
     try {
       const skip = guides.length;
-      // Get category ID if filter is active
-      const categoryId = initialGuides[0]?.category?.slug === categoryFilter ? initialGuides[0].categoryId : undefined;
+      // Find the active category ID from the filter
+      const categoryId = initialGuides[0]?.categories?.find(c => c.slug === categoryFilter)?.id;
       
       const newGuides = await getGuides({ skip, take: 9, categoryId });
       if (newGuides.length < 9) {
@@ -88,11 +87,17 @@ function GuideGrid({ initialGuides }: { initialGuides: Guide[] }) {
                 ].join(" ")}
                 style={{ animationDelay: `${(index % 6) * 0.05}s` }}
               >
-                {/* Category & Date */}
-                <div className="flex items-center justify-between gap-3 mb-5">
-                  <span className="inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-lime-500/10 dark:bg-lime-400/12 border border-lime-500/20 dark:border-lime-400/20 accent-green">
-                    {g.category?.name ?? "General"}
-                  </span>
+                {/* Categories */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {g.categories?.map((c) => (
+                    <span key={c.id} className="inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-lime-500/10 dark:bg-lime-400/12 border border-lime-500/20 dark:border-lime-400/20 accent-green">
+                      {c.name}
+                    </span>
+                  )) ?? (
+                    <span className="inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase bg-white/5 border border-white/10 text-muted">
+                      General
+                    </span>
+                  )}
                 </div>
 
                 {/* Title */}

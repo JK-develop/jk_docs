@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
@@ -33,7 +34,9 @@ export default async function RootLayout({
         <Providers>
           <div className="flex min-h-screen bg-app text-app">
             {/* Sidebar component - handles its own responsiveness via context */}
-            <Sidebar categories={categories} />
+            <Suspense>
+              <Sidebar categories={categories} />
+            </Suspense>
             
             <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
               <Header categories={categories} />

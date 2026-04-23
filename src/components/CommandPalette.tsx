@@ -43,8 +43,8 @@ export function CommandPalette() {
     return results.map((g) => ({
       id: g.id,
       title: g.title,
-      category: g.category?.name || "General",
-      section: "Docs",
+      category: g.categories?.[0]?.name || "General",
+      section: g.categories?.length > 1 ? `+${g.categories.length - 1} more` : "Docs",
       tags: g.tags ? g.tags.split(",").map((t: string) => t.trim()) : [],
       slug: g.slug,
     }));

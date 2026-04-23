@@ -48,7 +48,9 @@ export function GuideClient({ guide }: { guide: any }) {
          }}>
       <header style={{ marginBottom: '48px', borderBottom: '1px solid var(--border-color)', paddingBottom: '24px' }}>
         <div style={{ marginBottom: '16px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-           <span className="neon-tag" style={{ fontSize: '0.7rem' }}>{guide.category?.name}</span>
+           {(guide.categories || (guide.category ? [guide.category] : [])).map((c: any) => (
+             <span key={c.id} className="neon-tag" style={{ fontSize: '0.7rem' }}>{c.name}</span>
+           ))}
            {guide.tags && guide.tags.split(',').map((tag: string) => (
              <span key={tag} className="glass-input" style={{ fontSize: '0.7rem', padding: '1px 8px', borderRadius: '4px', color: 'var(--text-secondary)' }}>
                # {tag.trim()}

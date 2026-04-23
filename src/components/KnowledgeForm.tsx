@@ -9,12 +9,12 @@ import {
   Plus,
   Info,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import slugify from "slugify";
-import { saveLocalGuide } from "@/lib/localGuides";
+import { createGuide } from "@/lib/actions";
 import {
   loadLocalCategories,
   onCategoriesUpdated,
-  saveLocalCategory,
   type CategoryIconKey,
 } from "@/lib/localCategories";
 
@@ -28,11 +28,12 @@ interface KnowledgeFormProps {
 }
 
 export function KnowledgeForm({ categories }: KnowledgeFormProps) {
+  const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [title, setTitle] = useState("");
   const [formattedContent, setFormattedContent] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<Array<number | string>>([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<(number | string)[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const formattedRef = useRef<HTMLTextAreaElement>(null);
@@ -49,7 +50,11 @@ export function KnowledgeForm({ categories }: KnowledgeFormProps) {
     return merged;
   }, [categories, localCategories]);
 
-  const canSave = useMemo(() => formattedContent.trim().length > 0 && selectedCategories.length > 0, [formattedContent, selectedCategories]);
+  const canSave = useMemo(() => 
+    title.trim().length > 0 && 
+    formattedContent.trim().length > 0 && 
+    selectedCategoryIds.length > 0, 
+  [title, formattedContent, selectedCategoryIds]);
 
   useEffect(() => {
     setLocalCategories(loadLocalCategories());
@@ -115,47 +120,39 @@ export function KnowledgeForm({ categories }: KnowledgeFormProps) {
   };
 
   const handleSave = async () => {
-    if (!formattedContent.trim()) return;
-    if (selectedCategories.length === 0) return;
+    if (!canSave) return;
 
     setIsSaving(true);
     try {
-      const resolvedTitle =
-        title.trim() ||
-        "Untitled Guide";
-
-      const categoryNames = selectedCategories
-        .map(id => allCategories.find((c) => c.id === id))
-        .filter(Boolean)
-        .map(c => ({ id: c!.id, name: c!.name }));
-
-      const createdAt = new Date().toISOString();
-      const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-
+      const resolvedTitle = title.trim();
+      
       const slugBase = slugify(resolvedTitle, { lower: true, strict: true, trim: true }) || "guide";
       const resolvedSlug = `${slugBase}-${Date.now().toString(36)}`;
 
-      const description = formattedContent.trim().replace(/\s+/g, " ").slice(0, 160);
-
-      saveLocalGuide({
-        id,
+      await createGuide({
+        categoryIds: selectedCategoryIds.map(id => Number(id)),
         slug: resolvedSlug,
         title: resolvedTitle,
-        description,
         content: formattedContent,
-        categories: categoryNames.length > 0 ? categoryNames : [{ name: "General" }],
-        tags,
-        createdAt,
+        tags: tags.join(", "),
       });
 
       setTitle("");
       setFormattedContent("");
       setTags([]);
       setTagInput("");
-      setSelectedCategories([]);
+      setSelectedCategoryIds([]);
 
       setJustSaved(true);
-      window.setTimeout(() => setJustSaved(false), 1500);
+      
+      // Delay redirect slightly to show "Saved" state
+      setTimeout(() => {
+        router.push("/");
+        router.refresh();
+      }, 800);
+    } catch (error) {
+      console.error("Failed to save guide:", error);
+      alert("Failed to save guide. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -192,17 +189,17 @@ export function KnowledgeForm({ categories }: KnowledgeFormProps) {
           <label className="text-sm font-semibold text-slate-900 dark:text-slate-100 ml-1">Categories <span className="text-[color:var(--accent-green)]">*</span></label>
           <div className="flex flex-wrap gap-2">
             {allCategories.map((c) => {
-              const isSelected = selectedCategories.includes(c.id);
+              const isSelected = selectedCategoryIds.includes(c.id);
               return (
                 <button
                   key={String(c.id)}
                   type="button"
                   onClick={() => {
-                    setSelectedCategories((prev) =>
-                      prev.includes(c.id)
-                        ? prev.filter((id) => id !== c.id)
-                        : [...prev, c.id]
-                    );
+                    if (isSelected) {
+                      setSelectedCategoryIds(selectedCategoryIds.filter(id => id !== c.id));
+                    } else {
+                      setSelectedCategoryIds([...selectedCategoryIds, c.id]);
+                    }
                   }}
                   className={`
                     px-4 py-2 rounded-xl text-sm font-bold transition-all border
@@ -216,7 +213,7 @@ export function KnowledgeForm({ categories }: KnowledgeFormProps) {
               );
             })}
           </div>
-          {selectedCategories.length === 0 && (
+          {selectedCategoryIds.length === 0 && (
             <p className="text-xs text-red-400 ml-1">Please select at least one category.</p>
           )}
         </div>

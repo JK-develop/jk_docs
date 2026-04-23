@@ -1134,7 +1134,15 @@ If using Coolify auto-deploy:
       continue;
     }
 
-    await prisma.guide.create({ data: guide });
+    await prisma.guide.create({ 
+      data: {
+        ...guide,
+        categoryId: undefined,
+        categories: {
+          connect: { id: (guide as any).categoryId }
+        }
+      } 
+    });
     created++;
     console.log(`  ✅ Created: ${guide.title}`);
   }

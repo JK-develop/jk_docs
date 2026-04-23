@@ -16,15 +16,16 @@ RUN npm install --force
 # Copy the rest of the source code
 COPY . .
 
-# Generate Prisma client and push schema to database
-RUN npx prisma generate
-RUN npx prisma db push
-
 # Build the Next.js application
+# Generate Prisma client for build-time type checking
+RUN npx prisma generate
 RUN npm run build
+
+# Ensure start script is executable
+RUN chmod +x ./start.sh
 
 # Expose the application port
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "run", "start"]
+# Start the application via the startup script
+CMD ["./start.sh"]
