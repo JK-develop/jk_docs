@@ -16,9 +16,9 @@ RUN npm install --force
 # Copy the rest of the source code
 COPY . .
 
-# Build the Next.js application
-# Generate Prisma client for build-time type checking
+# Generate Prisma client and create temporary schema for build-time pre-rendering
 RUN npx prisma generate
+RUN npx prisma db push --accept-data-loss --skip-generate
 RUN npm run build
 
 # Ensure start script is executable
