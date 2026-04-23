@@ -1,7 +1,7 @@
 type CategoryLike = {
   id: number | string;
   name: string;
-  nameFa?: string;
+  nameFa?: string | null;
   guides?: any[];
 };
 
