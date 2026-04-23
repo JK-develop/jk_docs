@@ -39,12 +39,20 @@ export const AVAILABLE_ICONS = [
 ];
 
 export function DynamicIcon({ name, className, fallback }: { name?: string | null, className?: string, fallback?: LucideIcon }) {
-  if (!name) return fallback ? React.createElement(fallback, { className }) : null;
+  if (!name || typeof name !== "string") {
+    return fallback ? React.createElement(fallback, { className }) : null;
+  }
   
   const IconComponent = (LucideIcons as any)[name];
-  if (!IconComponent) return fallback ? React.createElement(fallback, { className }) : null;
+  if (!IconComponent) {
+    return fallback ? React.createElement(fallback, { className }) : null;
+  }
   
-  return React.createElement(IconComponent, { className });
+  try {
+    return React.createElement(IconComponent, { className });
+  } catch (err) {
+    return fallback ? React.createElement(fallback, { className }) : null;
+  }
 }
 
 interface IconPickerProps {
